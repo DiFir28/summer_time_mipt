@@ -1,49 +1,57 @@
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 #include "quade.h"
 
-double tests[7][6]={
-    {4, 1, -1.3, ROOTS_TWO, 0.45863087, -0.70863087},
-    {-1, 3.2, 4.7, ROOTS_TWO, -1.09443871, 4.29443871},
-    {-4, 12, -9, ROOTS_ONE, 1.5, 0},
-    {0, -2.6, 3.8, ROOTS_ONE, 1.46153846, 0},
-    {0, 0, -6.6,  ROOTS_ZERO, 0, 0},
-    {0, 0, 0, ROOTS_INF, 0, 0},
-    {-6.4, 0, 4.2, ROOTS_TWO, -0.81009258, 0.81009258}
-};
+#define FLAG_HELP "help"
+#define FLAG_DATA_FROM_FILE "file"
 
-int main(void){
-
-    for (int i = 0; i<7; i++){
-
-        Quadratic Equat = initQuadratic();
-        Equat.a = tests[i][0];
-        Equat.b = tests[i][1];
-        Equat.c = tests[i][2];
-        checkQuadratic(&Equat);
-
-        solveQuadratic(&Equat);
-
-        if (Equat.rootscount == tests[i][3]){
-            if (isZero(tests[i][4] - Equat.root1) && isZero(tests[i][5] - Equat.root2)){
-                printf("Test %i pass\n", i+1);
-            }
-            else{
-            printf("Test %i fail\n", i+1);
-            }
-        }
-        else{
-            printf("Test %i fail\n", i+1);
-        }
+bool mainTask(){
+    Quadratic Equat = initQuadratic();
+    if (inputQuadratic(&Equat)){
+        printf("Incorrect input.\n");
+        return 1;
     }
 
-    // Quadratic Equat = initQuadratic();
-    // if (inputQuadratic(&Equat)){
-    //     printf("Incorrect input.\n");
-    //     return 1;
-    // }
+    solveQuadratic(&Equat);
+    printRoots(&Equat);
+    return 0;
+}
 
-    // solveQuadratic(&Equat);
-    // printQuadratic(&Equat);
+
+int main(int argc, char *argv[]){
+
+    if (argc == 1){        
+        return mainTask();
+    }
+
+    if (strcmp(argv[1], FLAG_HELP) == 0){
+        printf("You need help");
+    }else 
+    if (strcmp(argv[1], FLAG_DATA_FROM_FILE) == 0){
+        if (argc != 3){
+            printf("You must give file name");
+            return 2;
+        }
+
+        FILE *file = fopen(argv[2], "r");
+        if (file == NULL){
+            printf("No file in directory");
+            return 3;
+        }
+        Quadratic Equat = initQuadratic();
+        int count_flag = fscanf(file, "%lf %lf %lf", &Equat.a, &Equat.b, &Equat.c);
+        if (count_flag != 3){
+            printf("Inc %i", count_flag);
+            return 4;
+        }
+        solveQuadratic(&Equat);
+        printRoots(&Equat);
+        fclose(file);
+    }
+
+
+
 
     return 0;
 }
