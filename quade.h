@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#define EPSILON 1e-8
+#define EPSILON 1e-7
 
 typedef enum{
     // ROOT_NEGATIVE_DISC = 0,
@@ -24,6 +24,7 @@ typedef struct {
 bool isZero(double A);
 
 Quadratic initQuadratic();
+void checkQuadratic(Quadratic *q);
 bool inputQuadratic(Quadratic *q);
 double findDisc(Quadratic *q);
 void solveAsLinear(Quadratic *q);

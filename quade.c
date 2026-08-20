@@ -9,13 +9,18 @@ Quadratic initQuadratic(){
     return q;
 }
 
+void checkQuadratic(Quadratic *q){
+    assert(isfinite(q->a));
+    assert(isfinite(q->b));
+    assert(isfinite(q->c));
+
+}
+
 bool inputQuadratic(Quadratic *q){
     printf("Enter your coefficients: ");
     bool flag = (scanf("%lf %lf %lf", &(q->a), &(q->b), &(q->c)) != 3);
     if (!flag){
-        assert(isfinite(q->a));
-        assert(isfinite(q->b));
-        assert(isfinite(q->c));
+        checkQuadratic(q);
     }
     return flag;
 }
@@ -54,7 +59,7 @@ void solveQuadratic(Quadratic *q){
     }
     else if (D == 0){
         q->rootscount = ROOTS_ONE;
-        q->root1 = (-q->b / (2/q->a));
+        q->root1 = (-q->b / (2*q->a));
     }
     else{
         q->rootscount = ROOTS_TWO;
