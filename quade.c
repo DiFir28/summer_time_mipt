@@ -4,65 +4,68 @@
 #include <math.h>
 #include <assert.h>
 
+#include "colors.h"
 
-Quadratic initQuadratic(){
-    Quadratic q = {.a = 0, .b = 0, .c = 0, .root1 = 0, .root2 = 0, .rootscount = ROOTS_ZERO};
-    return q;
+void initQuadraticEquation(QuadraticEquation *q){
+    *q = {.a = 0, .b = 0, .c = 0, .root1 = 0, .root2 = 0, .roots_count = ROOTS_ZERO};
 }
 
-void validQuadratic(Quadratic *q){
+void chekQuadraticEquation(QuadraticEquation *q){
     assert(isfinite(q->a));
     assert(isfinite(q->b));
     assert(isfinite(q->c));
 }
 
-bool inputQuadratic(Quadratic *q){
-    bool flag = 1;
+bool getInputQuadraticEquation(QuadraticEquation *q){
+    bool flag = 2;
+    printf(GREEN "Enter your coefficients: " DEFOULT_COLOR);
     while (flag != 0){
-        printf("Enter your coefficients: ");
+        
         flag = (scanf("%lf %lf %lf", &(q->a), &(q->b), &(q->c)) != 3);
         if (!flag){
-            validQuadratic(q);
+            chekQuadraticEquation(q);
         }
-        if (getchar() != '\n'){
+        while (getchar() != '\n'){
             flag = 1;
-            while (getchar() != '\n'){
-                continue;
-            }
+        }
+        if (flag == 1){
+            printf(YELLOW "Wrong coefficients, try again: " DEFOULT_COLOR);
         }
     }
     return flag;
 }
 
-bool Quadraticfromfile(Quadratic *q, char *file_name){
+bool QuadraticEquationfromfile(QuadraticEquation *q, char *file_name){
     FILE *file = fopen(file_name, "r");
-    if (file == NULL){
-        printf("No file in directory");
+    if (file == NULL){// errno
+        printf(RED "Incorrect file" DEFOULT_COLOR);
         return 1;
     }
     int count_flag = fscanf(file,"%lf %lf %lf", &(q->a), &(q->b), &(q->c));
     if (count_flag != 3){
-        printf("Incorrect file");
+        printf(RED "Incorrect file" DEFOULT_COLOR);
         return 1;
     }
+    fclose(file);
+    chekQuadraticEquation(q);
     return 0;
 }
 
-double findDisc(Quadratic *q){
+double findDisc(QuadraticEquation *q){
     return (q->b * q->b - (4 * q->a * q->c));
 }
 
-void solveAsLinear(Quadratic *q){
+void solveAsLinear(QuadraticEquation *q){
     if (isZero(q->b)){
         if (isZero(q->c)){
-            q->rootscount = ROOTS_INF;
+            q->roots_count = ROOTS_INF;
         }
         else{
-            q->rootscount = ROOTS_ZERO;
+            q->roots_count = ROOTS_ZERO;
         }
     }
     else{
-        q->rootscount = ROOTS_ONE;
+        q->roots_count = ROOTS_ONE;
         q->root1 = -q->c / q->b;
 
         if (isZero(q->root1)){
@@ -71,20 +74,14 @@ void solveAsLinear(Quadratic *q){
     }
 }
 
-void solveQuadratic(Quadratic *q){
-    if (isZero(q->a))
-    {
-        solveAsLinear(q);
-        return;
-    }
-    
+void solveAsQuadraticEquation(QuadraticEquation *q){  
     double D = findDisc(q);
 
     if (D < 0){
-        q->rootscount = ROOTS_ZERO;
+        q->roots_count = ROOTS_ZERO;
     }
     else if (isZero(D)){
-        q->rootscount = ROOTS_ONE;
+        q->roots_count = ROOTS_ONE;
         q->root1 = (-q->b / (2*q->a));
 
         if (isZero(q->root1)){
@@ -92,7 +89,7 @@ void solveQuadratic(Quadratic *q){
         }
     }
     else{
-        q->rootscount = ROOTS_TWO;
+        q->roots_count = ROOTS_TWO;
         q->root1 = (-q->b + sqrt(D)) / (2 * q->a);
         q->root2 = (-q->b - sqrt(D)) / (2 * q->a);
 
@@ -105,20 +102,29 @@ void solveQuadratic(Quadratic *q){
     }
 }
 
-void printRoots(Quadratic *q){
-    switch (q->rootscount)
+void solveQuadraticEquation(QuadraticEquation *q){
+    if (isZero(q->a))
+    {
+        solveAsLinear(q);
+        return;
+    }
+    solveAsQuadraticEquation(q);
+}
+
+void printRoots(QuadraticEquation *q){
+    switch (q->roots_count)
     {
     case ROOTS_INF:
-        printf("Your quadratic equation has infinity roots.\n");
+        printf(GREEN "Your quadratic equation has infinity roots.\n" DEFOULT_COLOR);
         break;
     case ROOTS_ZERO:
-        printf("Your quadratic equation has no roots.\n");
+        printf(GREEN "Your quadratic equation has no roots.\n" DEFOULT_COLOR);
         break;
     case ROOTS_ONE:
-        printf("Your quadratic equation has 1 root. Root: %lf\n", q->root1);
+        printf(GREEN "Your quadratic equation has 1 root. Root: %lf\n" DEFOULT_COLOR, q->root1);
         break;
     case ROOTS_TWO:
-        printf("Your quadratic equation has 2 roots. Roots: %lf, %lf\n", q->root1, q->root2);
+        printf(GREEN "Your quadratic equation has 2 roots. Roots: %lf, %lf\n" DEFOULT_COLOR, q->root1, q->root2);
         break;    
 
     }

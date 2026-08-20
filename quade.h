@@ -14,18 +14,18 @@ typedef enum{
 
 typedef struct {
     double a, b, c, root1, root2;
-    ROOTSCOUNT rootscount;
-} Quadratic;
+    ROOTSCOUNT roots_count;
+} QuadraticEquation;
 
 bool isZero(double A);
 
-Quadratic initQuadratic();
-void validQuadratic(Quadratic *q);
-bool inputQuadratic(Quadratic *q);
-bool Quadraticfromfile(Quadratic *q, char* file);
-double findDisc(Quadratic *q);
-void solveAsLinear(Quadratic *q);
-void solveQuadratic(Quadratic *q);
-void printRoots(Quadratic *q);
+void initQuadraticEquation(QuadraticEquation *q);
+void chekQuadraticEquation(QuadraticEquation *q);
+bool getInputQuadraticEquation(QuadraticEquation *q);
+bool QuadraticEquationfromfile(QuadraticEquation *q, char* file);
+double findDisc(QuadraticEquation *q);
+void solveAsLinear(QuadraticEquation *q);
+void solveQuadraticEquation(QuadraticEquation *q);
+void printRoots(QuadraticEquation *q);
 
 #endif

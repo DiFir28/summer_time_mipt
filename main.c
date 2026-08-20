@@ -5,94 +5,114 @@
 #include "returns.h"
 #include "cliprocessing.h"
 #include "quade.h"
+#include "colors.h"
 
-#define FLAG_HELP "help"
-#define FLAG_DATA_FROM_FILE "file"
-
-bool mainTask(){
-    Quadratic Equat = initQuadratic();
-    if (inputQuadratic(&Equat)){
-        printf("Incorrect input.\n");
-        return 1;
-    }
-
-    solveQuadratic(&Equat);
-    printRoots(&Equat);
-    return 0;
-}
-
+int printInfo();
+int printHelp();
+int handInputHandler(QuadraticEquation *equation);
+int fileInputHandler(QuadraticEquation *equation, char *file_name);
+int TestHandler(QuadraticEquation *equation);
 
 int main(int argc, char *argv[]){
 
-    Quadratic Equat = initQuadratic();
+    QuadraticEquation equation;
+    initQuadraticEquation(&equation);
     int script = getScript(argc, argv);
 
     switch (script)
     {
     case INFO:
-        printf("Info");
+        return printInfo();
         break;
 
     case HELP:
-        printf("You need help");
+        return printHelp();
         break;
 
-    case HAND_INPUT:
-        if (inputQuadratic(&Equat)){
-            printf("Incorrect input.\n");
-            return INCORRECT_PARAM;
-        }
-        solveQuadratic(&Equat);
-        printRoots(&Equat);
-        return CORRECT;
+    case HAND_INPUT:        
+        return handInputHandler(&equation);
         break;
 
     case FILE_INPUT:        
-        if (Quadraticfromfile(&Equat, argv[2])){
-            printf("Incorrect input.\n");
-            return INCORRECT_PARAM;
-        }
-        solveQuadratic(&Equat);
-        printRoots(&Equat);
-        return CORRECT;
+        
+        return fileInputHandler(&equation, argv[2]);
+        break;
+
+    case TESTING:
+        printf("Test");
+        return TestHandler(&equation);
         break;
     
     default:
         break;
     }
 
+    return 0;
+}
 
-    // if (argc == 1){        
-    //     return mainTask();
-    // }
+int printInfo(){
+    printf(YELLOW "Info" DEFOULT_COLOR);
+    return 0;
+}
 
-    // if (strcmp(argv[1], FLAG_HELP) == 0){
-    //     printf("You need help");
-    // }else 
-    // if (strcmp(argv[1], FLAG_DATA_FROM_FILE) == 0){
-    //     if (argc != 3){
-    //         printf("You must give file name");
-    //         return 2;
-    //     }
+int printHelp(){
+    printf(YELLOW "Help" DEFOULT_COLOR);
+    return 0;
+}
 
-    //     FILE *file = fopen(argv[2], "r");
-    //     if (file == NULL){
-    //         printf("No file in directory");
-    //         return 3;
-    //     }
-    //     Quadratic Equat = initQuadratic();
-    //     int count_flag = fscanf(file, "%lf %lf %lf", &Equat.a, &Equat.b, &Equat.c);
-    //     if (count_flag != 3){
-    //         printf("Inc %i", count_flag);
-    //         return 4;
-    //     }
-    //     solveQuadratic(&Equat);
-    //     printRoots(&Equat);
-    //     fclose(file);
-    // }
+int handInputHandler(QuadraticEquation *q){
+    if (getInputQuadraticEquation(q)){
+            printf(RED "Incorrect input.\n" DEFOULT_COLOR);
+            return INCORRECT_PARAM;
+        }
+        solveQuadraticEquation(q);
+        printRoots(q);
+        return CORRECT;
+}
 
+int fileInputHandler(QuadraticEquation *q, char *file_name){
+    if (QuadraticEquationfromfile(q, file_name)){
+        printf(RED "Incorrect input.\n" DEFOULT_COLOR);
+        return INCORRECT_PARAM;
+    }
+    solveQuadraticEquation(q);
+    printRoots(q);
+    return CORRECT;
+}
 
+QuadraticEquation tests[]={
+    {4, 1, -1.3, 0.45863087, -0.70863087, ROOTS_TWO},
+    {-1, 3.2, 4.7, -1.09443871, 4.29443871, ROOTS_TWO},
+    {-4, 12, -9, 1.5, 0, ROOTS_ONE},
+    {0, -2.6, 3.8, 1.46153846, 0, ROOTS_ONE},
+    {0, 0, -6.6, 0, 0, ROOTS_ZERO},
+    {0, 0, 0, 0, 0, ROOTS_INF},
+    {-6.4, 0, 4.2, -0.81009258, 0.81009258, ROOTS_TWO}
+};
 
+int TestHandler(QuadraticEquation *equation){
+    for (int i = 0; i < (sizeof(tests)/sizeof(tests[0])); i++){
 
+        initQuadraticEquation(equation);
+
+        equation->a = tests[i].a;
+        equation->b = tests[i].b;
+        equation->c = tests[i].c;
+        chekQuadraticEquation(equation);
+
+        solveQuadraticEquation(equation);
+
+        if (equation->roots_count == tests[i].roots_count){
+            if (isZero(tests[i].root1 - equation->root1) && isZero(tests[i].root2 - equation->root2)){
+                printf("Test %i pass\n", i+1);
+            }
+            else{
+            printf("Test %i fail  %lf %lf \n", i+1, equation->root1, equation->root2);
+            }
+        }
+        else{
+            printf("Test %i fail\n", i+1);
+        }
+    }
     return 0;
 }

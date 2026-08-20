@@ -6,12 +6,9 @@ typedef enum{
     HELP = 1,
     HAND_INPUT = 2,
     FILE_INPUT = 3,
-    ERROR = 4
+    TESTING = 4,
+    ERROR = 5
 } CLI_SCRIPTS;
-
-#define HELP_ARG "--help"
-#define HAND_WRITE_ARG "-input"
-#define FILE_READ_ARG "-file"
 
 CLI_SCRIPTS getScript(int argc, char *argv[]);
 
