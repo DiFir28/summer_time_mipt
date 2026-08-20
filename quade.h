@@ -19,13 +19,16 @@ typedef struct {
 
 bool isZero(double A);
 
-void initQuadraticEquation(QuadraticEquation *q);
+
+void checkLink(QuadraticEquation *q);
 void chekQuadraticEquation(QuadraticEquation *q);
+void initQuadraticEquation(QuadraticEquation *q);
 bool getInputQuadraticEquation(QuadraticEquation *q);
 bool QuadraticEquationfromfile(QuadraticEquation *q, char* file);
 double findDisc(QuadraticEquation *q);
 void solveAsLinear(QuadraticEquation *q);
 void solveQuadraticEquation(QuadraticEquation *q);
 void printRoots(QuadraticEquation *q);
+
 
 #endif

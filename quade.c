@@ -9,14 +9,19 @@
 void initQuadraticEquation(QuadraticEquation *q){
     *q = {.a = 0, .b = 0, .c = 0, .root1 = 0, .root2 = 0, .roots_count = ROOTS_ZERO};
 }
+void checkLink(QuadraticEquation *q){
+     assert(!(q==NULL));
+}
 
 void chekQuadraticEquation(QuadraticEquation *q){
+    checkLink(q);
     assert(isfinite(q->a));
     assert(isfinite(q->b));
     assert(isfinite(q->c));
 }
 
 bool getInputQuadraticEquation(QuadraticEquation *q){
+    checkLink(q);
     bool flag = 2;
     printf(GREEN "Enter your coefficients: " DEFOULT_COLOR);
     while (flag != 0){
@@ -36,6 +41,7 @@ bool getInputQuadraticEquation(QuadraticEquation *q){
 }
 
 bool QuadraticEquationfromfile(QuadraticEquation *q, char *file_name){
+    checkLink(q);
     FILE *file = fopen(file_name, "r");
     if (file == NULL){// errno
         printf(RED "Incorrect file" DEFOULT_COLOR);
@@ -52,10 +58,12 @@ bool QuadraticEquationfromfile(QuadraticEquation *q, char *file_name){
 }
 
 double findDisc(QuadraticEquation *q){
+    checkLink(q);
     return (q->b * q->b - (4 * q->a * q->c));
 }
 
 void solveAsLinear(QuadraticEquation *q){
+    checkLink(q);
     if (isZero(q->b)){
         if (isZero(q->c)){
             q->roots_count = ROOTS_INF;
@@ -75,6 +83,7 @@ void solveAsLinear(QuadraticEquation *q){
 }
 
 void solveAsQuadraticEquation(QuadraticEquation *q){  
+    checkLink(q);
     double D = findDisc(q);
 
     if (D < 0){
@@ -103,6 +112,7 @@ void solveAsQuadraticEquation(QuadraticEquation *q){
 }
 
 void solveQuadraticEquation(QuadraticEquation *q){
+    checkLink(q);
     if (isZero(q->a))
     {
         solveAsLinear(q);
@@ -112,6 +122,7 @@ void solveQuadraticEquation(QuadraticEquation *q){
 }
 
 void printRoots(QuadraticEquation *q){
+    checkLink(q);
     switch (q->roots_count)
     {
     case ROOTS_INF:
