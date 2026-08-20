@@ -17,15 +17,35 @@ void validQuadratic(Quadratic *q){
 }
 
 bool inputQuadratic(Quadratic *q){
-    printf("Enter your coefficients: ");
-    bool flag = (scanf("%lf %lf %lf", &(q->a), &(q->b), &(q->c)) != 3);
-    if (!flag){
-        validQuadratic(q);
-    }
-    if (getchar() != '\n'){
-        return 1;
+    bool flag = 1;
+    while (flag != 0){
+        printf("Enter your coefficients: ");
+        flag = (scanf("%lf %lf %lf", &(q->a), &(q->b), &(q->c)) != 3);
+        if (!flag){
+            validQuadratic(q);
+        }
+        if (getchar() != '\n'){
+            flag = 1;
+            while (getchar() != '\n'){
+                continue;
+            }
+        }
     }
     return flag;
+}
+
+bool Quadraticfromfile(Quadratic *q, char *file_name){
+    FILE *file = fopen(file_name, "r");
+    if (file == NULL){
+        printf("No file in directory");
+        return 1;
+    }
+    int count_flag = fscanf(file,"%lf %lf %lf", &(q->a), &(q->b), &(q->c));
+    if (count_flag != 3){
+        printf("Incorrect file");
+        return 1;
+    }
+    return 0;
 }
 
 double findDisc(Quadratic *q){

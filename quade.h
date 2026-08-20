@@ -22,6 +22,7 @@ bool isZero(double A);
 Quadratic initQuadratic();
 void validQuadratic(Quadratic *q);
 bool inputQuadratic(Quadratic *q);
+bool Quadraticfromfile(Quadratic *q, char* file);
 double findDisc(Quadratic *q);
 void solveAsLinear(Quadratic *q);
 void solveQuadratic(Quadratic *q);
