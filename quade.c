@@ -32,7 +32,7 @@ double findDisc(Quadratic *q){
 void solveAsLinear(Quadratic *q){
     // compare w/ 0 using eps
     if (isZero(q->b)){
-        if (q->c == 0){
+        if (isZero(q->c)){
             q->rootscount = ROOTS_INF;
         }
         else{
@@ -41,7 +41,7 @@ void solveAsLinear(Quadratic *q){
     }
     else{
         q->rootscount = ROOTS_ONE;
-        q->root1 = -q->c/q->b;
+        q->root1 = -q->c / q->b;
     }
 }
 
@@ -57,7 +57,7 @@ void solveQuadratic(Quadratic *q){
     if (D < 0){
         q->rootscount = ROOTS_ZERO;
     }
-    else if (D == 0){
+    else if (isZero(D)){
         q->rootscount = ROOTS_ONE;
         q->root1 = (-q->b / (2*q->a));
     }
