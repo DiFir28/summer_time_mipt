@@ -5,12 +5,17 @@
 
 #include "colors.h"
 
-char *HELP_ARG = "--help";
-char *HAND_WRITE_ARG = "-input";
-char *FILE_READ_ARG = "-file";
-char *TEST_ARG = "-test";
 
-CLI_SCRIPTS getScript(int argc, char *argv[]){
+
+
+const char *HELP_ARG = "--help";
+const char *HAND_WRITE_ARG = "-input";
+const char *FILE_READ_ARG = "-file";
+const char *TEST_ARG = "-test";
+const char *PARS_ARG = "-pars";
+
+
+CLI_SCRIPTS getScript(int argc, const char *argv[]){
     if (argc == 1 || argc > 3){        
         return INFO;
     }
@@ -22,13 +27,16 @@ CLI_SCRIPTS getScript(int argc, char *argv[]){
     }
     if (strcmp(argv[1], FILE_READ_ARG) == 0){
         if (argc != 3){
-            printf(RED "You must give file name" DEFOULT_COLOR);
+            printf(RED "You must give file name" DEFAULT_COLOR);
             return ERROR;
         }
         return FILE_INPUT;
     }
     if(strcmp(argv[1], TEST_ARG) == 0){
         return TESTING;
+    }
+    if(strcmp(argv[1], PARS_ARG) == 0){
+        return PARS;
     }
     return ERROR;
 }

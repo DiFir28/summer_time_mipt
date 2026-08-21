@@ -4,6 +4,8 @@
 #include <stdbool.h>
 
 #define EPSILON 1e-7
+#define checkLink(x); checkLinkS(x, __FILE__, __LINE__);
+#define chekQuadraticEquation(x); chekQuadraticEquationS(x, __FILE__, __LINE__);
 
 typedef enum{
     ROOTS_ZERO = 0,
@@ -19,16 +21,15 @@ typedef struct {
 
 bool isZero(double A);
 
-
-void checkLink(QuadraticEquation *q);
-void chekQuadraticEquation(QuadraticEquation *q);
+void checkLinkS(QuadraticEquation *q, const char* file, unsigned line);
+void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned line);
 void initQuadraticEquation(QuadraticEquation *q);
 bool getInputQuadraticEquation(QuadraticEquation *q);
-bool QuadraticEquationfromfile(QuadraticEquation *q, char* file);
-double findDisc(QuadraticEquation *q);
-void solveAsLinear(QuadraticEquation *q);
+bool QuadraticEquationfromfile(QuadraticEquation *q, const char* file);
+double findDiscriminant(QuadraticEquation *q);
 void solveQuadraticEquation(QuadraticEquation *q);
 void printRoots(QuadraticEquation *q);
 
+bool parsCoeffs(QuadraticEquation *q);
 
 #endif
