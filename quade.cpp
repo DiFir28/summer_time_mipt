@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "colors.h"
 
@@ -156,13 +157,12 @@ bool parsCoeffs(QuadraticEquation *q){
     char INPUT[50];
     unsigned x_offsets[2];
     unsigned x_count = 0;
-    scanf("%s", INPUT);
+    scanf("%[^\n]", INPUT);
     char *clearInput  = (char*)malloc(strlen(INPUT));
     unsigned J =0;
     bool powFlag = false;
     for(unsigned I = 0; I <= unsigned(strlen(INPUT)); I++){
-        if (INPUT[I] == ' ' || INPUT[I] == '*' || powFlag){
-            printf("SPAASe");
+        if ((INPUT[I] == ' ') ||(INPUT[I] == '*') || powFlag){
             powFlag = false;
             continue;
         }
@@ -170,7 +170,7 @@ bool parsCoeffs(QuadraticEquation *q){
             powFlag = true;
             continue;
         }
-        if (INPUT[I] == 'x'){ // TODO: FIX SPACES
+        if (INPUT[I] == 'x'){
             clearInput[J] = '\0';
             x_offsets[x_count] = J;
             x_count+=1;
@@ -182,8 +182,6 @@ bool parsCoeffs(QuadraticEquation *q){
         
     }
     clearInput[J] = '\0';
-    
-    printf("%s  %s  %s", clearInput, clearInput+x_offsets[0]+1, clearInput+x_offsets[1]+1);
 
     if (strlen(clearInput) == 0 || (strlen(clearInput) == 1 && (clearInput)[0] == '+')){
         q->a = 1;
@@ -193,16 +191,16 @@ bool parsCoeffs(QuadraticEquation *q){
         sscanf(clearInput, "%lf", &(q->a));
     }
 
-    if (strlen(clearInput+x_offsets[0]+1) == 1 && (clearInput+x_offsets[0]+1)[0] == '+'){
+    if (strlen(clearInput + x_offsets[0] + 1) == 1 && (clearInput + x_offsets[0] + 1)[0] == '+'){
         q->b = 1;
-    }else if(strlen(clearInput+x_offsets[0]+1) == 1 && (clearInput+x_offsets[0]+1)[0] == '-'){
+    }else if(strlen(clearInput + x_offsets[0] + 1) == 1 && (clearInput + x_offsets[0] + 1)[0] == '-'){
         q->b = -1;
     }else{
-        sscanf(clearInput+x_offsets[0]+1, "%lf", &(q->b));
+        sscanf(clearInput + x_offsets[0] + 1, "%lf", &(q->b));
     }
 
-    if (strlen(clearInput+x_offsets[1]+1) >1){
-        sscanf(clearInput+x_offsets[1]+1, "%lf", &(q->c));
+    if (strlen(clearInput + x_offsets[1] + 1) >1){
+        sscanf(clearInput + x_offsets[1] + 1, "%lf", &(q->c));
     }
     
 
