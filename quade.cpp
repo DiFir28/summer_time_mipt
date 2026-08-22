@@ -154,29 +154,29 @@ void printRoots(QuadraticEquation *q){
 //     checkLink(q);
 //     bool completed_flag = false;
 //     printf(GREEN "Enter your equation in format ax^2+bx+c: " DEFAULT_COLOR);
-//     char INPUT[50];
+//     char input[50];
 //     unsigned x_offsets[2];
 //     unsigned x_count = 0;
-//     scanf("%[^\n]", INPUT);
-//     char *clearInput  = (char*)malloc(strlen(INPUT)); // todo: malloc abuse
+//     scanf("%[^\n]", input);
+//     char *clearInput  = (char*)malloc(strlen(input)); // todo: malloc abuse
 //     // ! remane
 //     unsigned J =0;
-//     for(unsigned I = 0; I <= unsigned(strlen(INPUT)); I++){
-//         if ((INPUT[I] == ' ') ||(INPUT[I] == '*')){
+//     for(unsigned I = 0; I <= unsigned(strlen(input)); I++){
+//         if ((input[I] == ' ') ||(input[I] == '*')){
 //             continue;
 //         }
-//         if (INPUT[I] == '^'){
+//         if (input[I] == '^'){
 //             I++;
 //             continue;
 //         }
-//         if (INPUT[I] == 'x'){
+//         if (input[I] == 'x'){
 //             clearInput[J] = '\0';
 //             x_offsets[x_count] = J;
 //             x_count+=1;
 //             J++;
 //             continue;
 //         }
-//         clearInput[J] = INPUT[I];
+//         clearInput[J] = input[I];
 //         J++;
         
 //     }
@@ -211,55 +211,72 @@ void printRoots(QuadraticEquation *q){
 bool parsCoeffs2(QuadraticEquation *q){
     checkLink(q);
     bool completed_flag = false;    
-    char INPUT[254];
+    char input[254] = {0};
     double x_coeffs[3] = {0}; //! index ~ power of x
-    unsigned beg_offset = 0, end_offset = 0;
+    unsigned last_offset = 0;
 
     printf(GREEN "Enter your equation in format ax^2+bx+c: " DEFAULT_COLOR);
-    scanf("%[^\n]", INPUT);
+    scanf("%254[^\n]", input);
 
-    unsigned J =0;
-    for(unsigned I = 0; I <= unsigned(strlen(INPUT)); I++){
-        if ((INPUT[I] == ' ') || (INPUT[I] == '*') || (INPUT[I] == '^')){
+    unsigned J = 0;
+    for(unsigned I = 0; I <= unsigned(strlen(input)); I++){
+        if ((input[I] == ' ') || (input[I] == '*') || (input[I] == '^')){
             continue;
         }
-        if (J == 0 && INPUT[I] == 'x'){
-            INPUT[J] = '+';
+        if (J == 0 && input[I] == 'x'){
+            input[J] = '+';
             J++;
         }
-        INPUT[J] = INPUT[I];
+        input[J] = input[I];
         J++;
-    }    
-    
-    for(unsigned I = 0, n = unsigned(strlen(INPUT)); I <= n; I++){
-        char buff[32] = {0};
-        if (INPUT[I] != '+' && INPUT[I] != '-' && INPUT[I] != '\0'){
-            continue;
-        }
-        beg_offset = end_offset;
-        end_offset = I;
-        double k = 0; 
-        strncpy(buff, INPUT + beg_offset, end_offset - beg_offset);
+    }
 
-        char xbuff[32] = {0};
-        char kbuff[32] = {0};
-        sscanf(buff, "%[^x\n]%s", kbuff, xbuff); //TODO strchr
-        if (strlen(kbuff) == 0){
+    bool free_part_flag = false;
+    bool start_flag = true;
+
+    for(unsigned I = 0, n = unsigned(strlen(input)); I <= n; I++){  
+        if (input[I] != '+' && input[I] != '-' && input[I] != '\0'){
             continue;
-        }else if(strlen(kbuff) == 1 && (kbuff)[0] == '+'){
-            k = 1;
-        }else if(strlen(kbuff) == 1 && (kbuff)[0] == '-'){
-            k = -1; // TODO: rename single letter variables
-        }else{        
-            k = atof(kbuff);
         }
-        if (xbuff[0] == ' '){
-            x_coeffs[0]+=k;
-        }else if(strlen(xbuff) == 1){
-            x_coeffs[1]+=k;
+        if (start_flag){
+            start_flag = false;
+            continue;
+        }
+
+        char* k_pntr = input + last_offset; 
+        last_offset = I;
+        double cur_k = 0; 
+        char sign = input[I];
+        input[I] = '\0';
+               
+
+        char *x_pntr = strchr(k_pntr, 'x');
+        if (x_pntr == NULL){
+            if ((x_pntr = strchr(k_pntr, '\0')) == NULL) return true;
+            free_part_flag = true;
         }else{
-            x_coeffs[atoi(xbuff+1)]+=k;
-        }        
+            free_part_flag = false;
+            *x_pntr = '\0';
+            x_pntr++;
+        }
+
+        if (*k_pntr == '\0'){
+            continue;
+        }else if(*(k_pntr+1) == '\0' && *k_pntr == '+'){
+            cur_k = 1;
+        }else if(*(k_pntr+1) == '\0' && *k_pntr == '-'){
+            cur_k = -1; // TODO: rename single letter variables
+        }else{        
+            cur_k = atof(k_pntr);
+        }
+        if (free_part_flag){
+            x_coeffs[0]+=cur_k;
+        }else if(*x_pntr == '\0'){
+            x_coeffs[1]+=cur_k;
+        }else{
+            x_coeffs[atoi(x_pntr)]+=cur_k;
+        }
+        input[I] = sign;
     }
 
     printf("%lg %lg %lg", x_coeffs[2], x_coeffs[1], x_coeffs[0]);
