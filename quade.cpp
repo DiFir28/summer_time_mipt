@@ -202,53 +202,6 @@ bool parsCoeffs(QuadraticEquation *q){
     if (strlen(clearInput + x_offsets[1] + 1) >1){
         sscanf(clearInput + x_offsets[1] + 1, "%lf", &(q->c));
     }
-    
-
-
-
-    // for(unsigned I = 0; I < strlen(INPUT); I++){
-
-    //     if (seq[i] == 'K'){
-    //         printf("RIP");
-    //         sscanf(INPUT, "%lf%*[x\n]", bb);
-    //         printf("RIP");
-    //         printf("r %i <- %lg %s\n", I, bb, INPUT+I);
-    //         switch (ki)
-    //         {
-    //         case 1:
-    //             q->a = bb;
-    //         case 2:
-    //             q->b = bb;
-    //         case 3:
-    //             q->c = bb;
-    //         default:
-    //             printf(RED "Warn" DEFAULT_COLOR);
-    //             break;
-    //         }
-    //         I+=strlen(buf)-1;
-    //         ki++;
-    //         i++;
-    //         continue;
-    //     }
-    //     if (INPUT[I] == ' '|| '*'){
-    //         continue;
-    //     }
-    //     isAccept = false;
-    //     for (unsigned j = 0; j < strlen(accepted); j++){
-    //         if (INPUT[I] == accepted[j]){
-    //             isAccept = true;
-    //             if (j <=1){
-    //                 signs[si] = INPUT[I];
-    //                 si ++;
-    //             }
-    //         }
-    //     }
-    //     if (isAccept){
-    //         i++;
-    //     }        
-    // }
-    printf(YELLOW "End reading %lg %lg %lg" DEFAULT_COLOR, q->a, q->b, q->c);
-
     return completed_flag;
     
     

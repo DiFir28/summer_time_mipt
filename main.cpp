@@ -12,6 +12,7 @@ int printInfo();
 int printHelp();
 int handInputHandler(QuadraticEquation *equation);
 int fileInputHandler(QuadraticEquation *equation, const char *file_name);
+int parsHandler(QuadraticEquation *q);
 int TestHandler(QuadraticEquation *equation);
 
 int main(int argc, const char *argv[]){
@@ -37,7 +38,7 @@ int main(int argc, const char *argv[]){
         printf("Test");
         return TestHandler(&equation);
     case PARS:
-        return parsCoeffs(&equation);
+        return parsHandler(&equation);
     
     default:
         return UNKNOWN_SCRIPT;
@@ -69,6 +70,13 @@ int fileInputHandler(QuadraticEquation *q, const char *file_name){
         printf(RED "Incorrect input.\n" DEFAULT_COLOR);
         return INCORRECT_PARAM;
     }
+    solveQuadraticEquation(q);
+    printRoots(q);
+    return CORRECT;
+}
+
+int parsHandler(QuadraticEquation *q){
+    parsCoeffs(q);
     solveQuadraticEquation(q);
     printRoots(q);
     return CORRECT;
