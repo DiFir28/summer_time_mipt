@@ -150,61 +150,120 @@ void printRoots(QuadraticEquation *q){
     }
 }
 
-bool parsCoeffs(QuadraticEquation *q){
-    checkLink(q);
-    bool completed_flag = false;
-    printf(GREEN "Enter your equation in format ax^2+bx+c: " DEFAULT_COLOR);
-    char INPUT[50];
-    unsigned x_offsets[2];
-    unsigned x_count = 0;
-    scanf("%[^\n]", INPUT);
-    char *clearInput  = (char*)malloc(strlen(INPUT));
-    unsigned J =0;
-    bool powFlag = false;
-    for(unsigned I = 0; I <= unsigned(strlen(INPUT)); I++){
-        if ((INPUT[I] == ' ') ||(INPUT[I] == '*') || powFlag){
-            powFlag = false;
-            continue;
-        }
-        if (INPUT[I] == '^'){
-            powFlag = true;
-            continue;
-        }
-        if (INPUT[I] == 'x'){
-            clearInput[J] = '\0';
-            x_offsets[x_count] = J;
-            x_count+=1;
-            J++;
-            continue;
-        }
-        clearInput[J] = INPUT[I];
-        J++;
+// bool parsCoeffs(QuadraticEquation *q){
+//     checkLink(q);
+//     bool completed_flag = false;
+//     printf(GREEN "Enter your equation in format ax^2+bx+c: " DEFAULT_COLOR);
+//     char INPUT[50];
+//     unsigned x_offsets[2];
+//     unsigned x_count = 0;
+//     scanf("%[^\n]", INPUT);
+//     char *clearInput  = (char*)malloc(strlen(INPUT)); // todo: malloc abuse
+//     // ! remane
+//     unsigned J =0;
+//     for(unsigned I = 0; I <= unsigned(strlen(INPUT)); I++){
+//         if ((INPUT[I] == ' ') ||(INPUT[I] == '*')){
+//             continue;
+//         }
+//         if (INPUT[I] == '^'){
+//             I++;
+//             continue;
+//         }
+//         if (INPUT[I] == 'x'){
+//             clearInput[J] = '\0';
+//             x_offsets[x_count] = J;
+//             x_count+=1;
+//             J++;
+//             continue;
+//         }
+//         clearInput[J] = INPUT[I];
+//         J++;
         
-    }
-    clearInput[J] = '\0';
+//     }
+//     clearInput[J] = '\0';
 
-    if (strlen(clearInput) == 0 || (strlen(clearInput) == 1 && (clearInput)[0] == '+')){
-        q->a = 1;
-    }else if((clearInput)[0] == '-'  && strlen(clearInput) == 1){
-        q->a = -1;
-    }else{
-        sscanf(clearInput, "%lf", &(q->a));
+//     if (clearInput[0] == '\0' || (clearInput[1] == '\0' && (clearInput)[0] == '+')){
+//         q->a = 1;
+//     }else if((clearInput)[0] == '-'  &&  clearInput[1] == '\0'){
+//         q->a = -1;
+//     }else{
+//         sscanf(clearInput, "%lf", &(q->a));
+//     }
+
+//     if ((clearInput + beg_offset + 1)[1] == '\0' && (clearInput + beg_offset + 1)[0] == '+'){
+//         q->b = 1;
+//     }else if((clearInput + beg_offset + 1)[1] == '\0' && (clearInput + beg_offset + 1)[0] == '-'){
+//         q->b = -1;
+//     }else{
+//         sscanf(clearInput + beg_offset + 1, "%lf", &(q->b));
+//     }
+
+//     if ((clearInput + end_offset + 1)[0] != '\0' && (clearInput + end_offset + 1)[1] != '\0'){
+//         sscanf(clearInput + end_offset + 1, "%lf", &(q->c));
+//     }else{
+//         (q->c) = 0;
+//     } //TODO copy pasta
+//     return completed_flag;
+    
+    
+// }
+
+bool parsCoeffs2(QuadraticEquation *q){
+    checkLink(q);
+    bool completed_flag = false;    
+    char INPUT[254];
+    double x_coeffs[3] = {0}; //! index ~ power of x
+    unsigned beg_offset = 0, end_offset = 0;
+
+    printf(GREEN "Enter your equation in format ax^2+bx+c: " DEFAULT_COLOR);
+    scanf("%[^\n]", INPUT);
+
+    unsigned J =0;
+    for(unsigned I = 0; I <= unsigned(strlen(INPUT)); I++){
+        if ((INPUT[I] == ' ') || (INPUT[I] == '*') || (INPUT[I] == '^')){
+            continue;
+        }
+        if (J == 0 && INPUT[I] == 'x'){
+            INPUT[J] = '+';
+            J++;
+        }
+        INPUT[J] = INPUT[I];
+        J++;
+    }    
+    
+    for(unsigned I = 0, n = unsigned(strlen(INPUT)); I <= n; I++){
+        char buff[32] = {0};
+        if (INPUT[I] != '+' && INPUT[I] != '-' && INPUT[I] != '\0'){
+            continue;
+        }
+        beg_offset = end_offset;
+        end_offset = I;
+        double k = 0; 
+        strncpy(buff, INPUT + beg_offset, end_offset - beg_offset);
+
+        char xbuff[32] = {0};
+        char kbuff[32] = {0};
+        sscanf(buff, "%[^x\n]%s", kbuff, xbuff); //TODO strchr
+        if (strlen(kbuff) == 0){
+            continue;
+        }else if(strlen(kbuff) == 1 && (kbuff)[0] == '+'){
+            k = 1;
+        }else if(strlen(kbuff) == 1 && (kbuff)[0] == '-'){
+            k = -1; // TODO: rename single letter variables
+        }else{        
+            k = atof(kbuff);
+        }
+        if (xbuff[0] == ' '){
+            x_coeffs[0]+=k;
+        }else if(strlen(xbuff) == 1){
+            x_coeffs[1]+=k;
+        }else{
+            x_coeffs[atoi(xbuff+1)]+=k;
+        }        
     }
 
-    if (strlen(clearInput + x_offsets[0] + 1) == 1 && (clearInput + x_offsets[0] + 1)[0] == '+'){
-        q->b = 1;
-    }else if(strlen(clearInput + x_offsets[0] + 1) == 1 && (clearInput + x_offsets[0] + 1)[0] == '-'){
-        q->b = -1;
-    }else{
-        sscanf(clearInput + x_offsets[0] + 1, "%lf", &(q->b));
-    }
-
-    if (strlen(clearInput + x_offsets[1] + 1) >1){
-        sscanf(clearInput + x_offsets[1] + 1, "%lf", &(q->c));
-    }
+    printf("%lg %lg %lg", x_coeffs[2], x_coeffs[1], x_coeffs[0]);
     return completed_flag;
-    
-    
 }
 
 bool isZero(double A){

@@ -36,7 +36,7 @@ int main(int argc, const char *argv[]){
 
     case TESTING:
         printf("Test");
-        return TestHandler(&equation);
+        return parsCoeffs2(&equation);
     case PARS:
         return parsHandler(&equation);
     
@@ -76,7 +76,7 @@ int fileInputHandler(QuadraticEquation *q, const char *file_name){
 }
 
 int parsHandler(QuadraticEquation *q){
-    parsCoeffs(q);
+    // parsCoeffs(q);
     solveQuadraticEquation(q);
     printRoots(q);
     return CORRECT;
