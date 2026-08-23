@@ -9,10 +9,10 @@
 
 
 const char *HELP_ARG = "--help";
-const char *HAND_WRITE_ARG = "-input";
-const char *FILE_READ_ARG = "-file";
-const char *TEST_ARG = "-test";
-const char *PARS_ARG = "-pars";
+const char *HAND_WRITE_ARG = "--input";
+const char *FILE_READ_ARG = "--file";
+const char *TEST_ARG = "--test";
+const char *PARS_ARG = "--pars";
 
 
 CLI_SCRIPTS getScript(int argc, const char *argv[]){
