@@ -10,6 +10,7 @@ bool signCheck(char *input);
 void strnprint(const char *input, unsigned n);
 char *sumSplit(char * const input);
 char *mulSplit(char * const input);
+mulPars(const char *input, const char *endMul, double *output_k);
 
 
 #endif

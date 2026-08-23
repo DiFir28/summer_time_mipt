@@ -29,8 +29,12 @@ bool NEWparsCoeffs(QuadraticEquation *q){
     while (*ptr != '\0'){
         strnprint(prev,ptr-prev);
         printf("\t");
+
         char *mprev = prev;
         char *mptr = mulSplit(prev);
+        while (*mprev == '+' || *mprev == '-'){
+            mprev;
+        }
         while (mptr != NULL && (mptr < ptr)){
             strnprint(mprev,mptr-mprev);
             printf(" ");
@@ -39,6 +43,7 @@ bool NEWparsCoeffs(QuadraticEquation *q){
         }
         strnprint(mprev,mptr-mprev);
         printf("\n");
+
         prev = ptr;
         ptr = sumSplit(ptr+1);
     }
@@ -54,7 +59,7 @@ void strnprint(const char *input, unsigned n){
     }
 }
 
-char *sumSplit(char * const input){
+char *sumSplit(const char * const input){
     char *minus = strchr(input, '-');
     char *plus = strchr(input, '+');
     char *end = strchr(input, '\0');
@@ -73,12 +78,26 @@ char *sumSplit(char * const input){
     return plus;
 }
 
-char *mulSplit(char * const input){
+char *mulSplit(const char * const input){
     char *mul =strchr(input, '*');
     if (mul == NULL){
         return sumSplit(input);
     }
     return mul;
+}
+
+int mulPars(const char *input, const char *endMul, double *output_k){ // int - power of X
+    while (input[0] == '*'){
+        input++;
+    }
+    char *endK;
+    *output_k = strtod(input, &endK);
+    if (endMul - input == 0){
+        return 0;
+    }
+    
+
+
 }
 
 
