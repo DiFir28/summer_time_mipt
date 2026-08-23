@@ -15,7 +15,8 @@ typedef enum{
 } ROOTSCOUNT;
 
 typedef struct {
-    double a, b, c, root1, root2;
+    double a, b, c;
+    double root1, root2;
     ROOTSCOUNT roots_count;
 } QuadraticEquation;
 
