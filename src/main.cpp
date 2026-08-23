@@ -6,6 +6,7 @@
 #include "returns.h"
 #include "cliprocessing.h"
 #include "quade.h"
+#include "parser.h"
 #include "colors.h"
 
 int printInfo();
@@ -35,8 +36,7 @@ int main(int argc, const char *argv[]){
         return fileInputHandler(&equation, argv[2]);
 
     case TESTING:
-        printf("Test");
-        return parsCoeffs2(&equation);
+        return TestHandler(&equation);
     case PARS:
         return parsHandler(&equation);
     
@@ -76,9 +76,12 @@ int fileInputHandler(QuadraticEquation *q, const char *file_name){
 }
 
 int parsHandler(QuadraticEquation *q){
-    // parsCoeffs(q);
-    solveQuadraticEquation(q);
-    printRoots(q);
+    if (NEWparsCoeffs(q)){
+        printf(RED "INCORRECT" DEFAULT_COLOR);
+        return INCORRECT_PARAM;
+    }
+    // solveQuadraticEquation(q);
+    // printRoots(q);
     return CORRECT;
 }
 
@@ -89,7 +92,8 @@ QuadraticEquation tests[]={
     {0, -2.6, 3.8, 1.46153846, 0, ROOTS_ONE},
     {0, 0, -6.6, 0, 0, ROOTS_ZERO},
     { 0, 0, 0, 0, 0, ROOTS_INF},
-    {-6.4, 0, 4.2, -0.81009258, 0.81009258, ROOTS_TWO}
+    {-6.4, 0, 4.2, -0.81009258, 0.81009258, ROOTS_TWO},
+    {7.209, -265.868, 2429.6, 20.17512489, 16.70488620, ROOTS_TWO}
 };
 
 int TestHandler(QuadraticEquation *equation){

@@ -30,7 +30,5 @@ double findDiscriminant(QuadraticEquation *q);
 void solveQuadraticEquation(QuadraticEquation *q);
 void printRoots(QuadraticEquation *q);
 
-// bool parsCoeffs(QuadraticEquation *q);
-bool parsCoeffs2(QuadraticEquation *q);
 
 #endif
