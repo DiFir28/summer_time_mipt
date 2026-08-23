@@ -8,9 +8,10 @@ bool NEWparsCoeffs(QuadraticEquation *q);
 bool trashCleaner(char *input);
 bool signCheck(char *input);
 void strnprint(const char *input, unsigned n);
-char *sumSplit(char * const input);
-char *mulSplit(char * const input);
-mulPars(const char *input, const char *endMul, double *output_k);
+const char *sumSplit(const char * const input);
+const char *mulSplit(const char * const input);
+bool sumParsint (const char *input, const char *endMul, double output_k[]);
+int mulPars(const char *input, const char *endMul, double *output_k);
 
 
 #endif

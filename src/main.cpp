@@ -86,14 +86,14 @@ int parsHandler(QuadraticEquation *q){
 }
 
 QuadraticEquation tests[]={
-    {4, 1, -1.3, 0.45863087, -0.70863087, ROOTS_TWO},
-    {-1, 3.2, 4.7, -1.09443871, 4.29443871, ROOTS_TWO},
-    {-4, 12, -9, 1.5, 0, ROOTS_ONE},
-    {0, -2.6, 3.8, 1.46153846, 0, ROOTS_ONE},
-    {0, 0, -6.6, 0, 0, ROOTS_ZERO},
-    { 0, 0, 0, 0, 0, ROOTS_INF},
-    {-6.4, 0, 4.2, -0.81009258, 0.81009258, ROOTS_TWO},
-    {7.209, -265.868, 2429.6, 20.17512489, 16.70488620, ROOTS_TWO}
+    {    4,        1,   -1.3,  0.45863087, -0.70863087,  ROOTS_TWO},
+    {   -1,      3.2,    4.7, -1.09443871,  4.29443871,  ROOTS_TWO},
+    {   -4,       12,     -9,         1.5,           0,  ROOTS_ONE},
+    {    0,     -2.6,    3.8,  1.46153846,           0,  ROOTS_ONE},
+    {    0,        0,   -6.6,           0,           0, ROOTS_ZERO},
+    {    0,        0,      0,           0,           0,  ROOTS_INF},
+    { -6.4,        0,    4.2, -0.81009258,  0.81009258,  ROOTS_TWO},
+    {7.209, -265.868, 2429.6, 20.17512489, 16.70488620,  ROOTS_TWO}
 };
 
 int TestHandler(QuadraticEquation *equation){
@@ -122,3 +122,5 @@ int TestHandler(QuadraticEquation *equation){
     }
     return 0;
 }
+
+// C:\Users\Mi\AppData\Local\Microsoft\WinGet\Packages\XAMPPRocky.Tokei_Microsoft.Winget.Source_8wekyb3d8bbwe\tokei.exe 
