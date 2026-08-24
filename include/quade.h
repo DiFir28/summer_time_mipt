@@ -24,9 +24,6 @@ bool isZero(double A);
 
 void checkLinkS(QuadraticEquation *q, const char* file, unsigned line);
 void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned line);
-void initQuadraticEquation(QuadraticEquation *q);
-bool getInputQuadraticEquation(QuadraticEquation *q);
-bool QuadraticEquationfromfile(QuadraticEquation *q, const char* file);
 double findDiscriminant(QuadraticEquation *q);
 void solveQuadraticEquation(QuadraticEquation *q);
 void printRoots(QuadraticEquation *q);

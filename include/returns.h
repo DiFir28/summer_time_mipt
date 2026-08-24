@@ -4,8 +4,10 @@
 typedef enum{
     CORRECT = 0,
     INCORRECT_PARAM = 1,
-    FILE_ERROR = 2,
-    UNKNOWN_SCRIPT = 3,
+    INCORRECT_X_POWER = 2,
+    FILE_ERROR = 3,
+    FEW_SIGNS_IN_ROW = 4,
+    UNKNOWN_CLI_FLAGS = 5,
 } OUTPUTS;
 
 #endif

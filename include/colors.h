@@ -6,4 +6,6 @@
 #define YELLOW "\033[33m"
 #define DEFAULT_COLOR "\033[0m"
 
+#define MAX_INPUT_SIZE 100
+
 #endif

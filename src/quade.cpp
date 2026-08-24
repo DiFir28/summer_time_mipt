@@ -9,9 +9,9 @@
 #include "colors.h"
 
 
-void initQuadraticEquation(QuadraticEquation *q){
-    *q = {.a = 0, .b = 0, .c = 0, .root1 = 0, .root2 = 0, .roots_count = ROOTS_ZERO};
-}
+// void initQuadraticEquation(QuadraticEquation *q){
+//     *q = {.a = 0, .b = 0, .c = 0, .root1 = 0, .root2 = 0, .roots_count = ROOTS_ZERO};
+// }
 
 void checkLinkS(QuadraticEquation *q, const char* file, unsigned line){
     if ((q==NULL)){
@@ -26,43 +26,6 @@ void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned lin
         printf(RED "Incorrect coefficients, file %s line %d.\n" DEFAULT_COLOR, file, line);
         abort();
     }
-}
-
-bool getInputQuadraticEquation(QuadraticEquation *q){
-    checkLink(q);
-    bool completed_flag = false;
-    printf(GREEN "Enter your coefficients: " DEFAULT_COLOR);
-    do{
-        completed_flag = (scanf("%lf%*[ ]%lf%*[ ]%lf", &(q->a), &(q->b), &(q->c)) != 3);
-        if (!completed_flag){
-            chekQuadraticEquation(q);
-        }
-        while (getchar() != '\n'){
-            completed_flag = true;
-        }
-        if (completed_flag == true){
-            printf(YELLOW "Wrong coefficients, try again: " DEFAULT_COLOR);
-        }
-    }while (completed_flag);
-
-    return completed_flag;
-}
-
-bool QuadraticEquationfromfile(QuadraticEquation *q, const char *file_name){
-    checkLink(q);
-    FILE *file = fopen(file_name, "r");
-    if (file == NULL){// errno
-        printf(RED "Incorrect file" DEFAULT_COLOR);
-        return true;
-    }
-    int count_flag = fscanf(file,"%lf %lf %lf", &(q->a), &(q->b), &(q->c));
-    if (count_flag != 3){
-        printf(RED "Incorrect file" DEFAULT_COLOR);
-        return true;
-    }
-    fclose(file);
-    chekQuadraticEquation(q);
-    return false;
 }
 
 double findDiscriminant(QuadraticEquation *q){
