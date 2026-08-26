@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
+#include <stdbool.h>
 #include "colors.h"
 
 
-void checkLinkS(QuadraticEquation *q, const char* file, unsigned line)
+void checkLinkSys(QuadraticEquation *q, const char* file, unsigned line)
 {
     if ((q==NULL)){
         printf(RED "Incorrect Link, file %s line %d.\n" DEFAULT_COLOR, file, line);
@@ -17,7 +17,7 @@ void checkLinkS(QuadraticEquation *q, const char* file, unsigned line)
     }
 }
 
-void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned line)
+void checkQuadraticEquationSys(QuadraticEquation *q, const char* file, unsigned line)
 {
     checkLink(q);
     if (!(isfinite(q->a) && isfinite(q->b) && isfinite(q->c))){
@@ -26,13 +26,17 @@ void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned lin
     }
 }
 
-double findDiscriminant(QuadraticEquation *q)
+double calcDiscriminant(QuadraticEquation *q)
 {
     checkLink(q);
     return (q->b * q->b - (4 * q->a * q->c));
 }
 
-static void solveAsLinear(QuadraticEquation *q)
+/**
+ * @brief Solve linear equation
+ * @param[in, out] q equation for solve
+ */
+static void solveAsLinearEquation(QuadraticEquation *q)
 {
     checkLink(q);
     if (isZero(q->b)){
@@ -53,10 +57,15 @@ static void solveAsLinear(QuadraticEquation *q)
     }
 }
 
+
+/**
+ * @brief Solve quadratic equation
+ * @param[in, out] q equation for solve
+ */
 static void solveAsQuadraticEquation(QuadraticEquation *q)
 {  
     checkLink(q);
-    double D = findDiscriminant(q);
+    double D = calcDiscriminant(q);
 
     if (D < 0){
         q->roots_count = ROOTS_ZERO;
@@ -89,7 +98,7 @@ void solveQuadraticEquation(QuadraticEquation *q)
     checkLink(q);
     if (isZero(q->a))
     {
-        solveAsLinear(q);
+        solveAsLinearEquation(q);
         return;
     }
     solveAsQuadraticEquation(q);
@@ -116,7 +125,30 @@ void printRoots(QuadraticEquation *q)
     }
 }
 
-bool isZero(double A)
+bool checkQuadraticEquationRoots(QuadraticEquation *q){
+    checkLink(q);
+    switch (q->roots_count)
+    {
+    case ROOTS_INF:
+        return true;
+    case ROOTS_ZERO:
+        return (calcDiscriminant(q) < 0);
+    case ROOTS_ONE:
+        return isZero(q->a * pow(q->root1, 2) + q->b * q->root1 + q->c);
+    case ROOTS_TWO:
+        return ( isZero(q->a * pow(q->root1, 2) + q->b * q->root1 + q->c) && isZero(q->a * pow(q->root2, 2) + q->b * q->root2 + q->c));
+    }
+    return false;
+}
+
+void randQuadraticEquation(QuadraticEquation *q){
+    q = {};
+    q->a = (rand()%1000000 - 500000)/1000;
+    q->b = (rand()%1000000 - 500000)/1000;
+    q->c = (rand()%1000000 - 500000)/1000;
+}
+
+bool isZero(double num)
 {
-    return (fabs(A) < EPSILON);
+    return (fabs(num) < EPSILON);
 }

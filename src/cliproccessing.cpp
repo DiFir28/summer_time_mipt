@@ -5,24 +5,57 @@
 #include <string.h>
 #include "colors.h"
 
-const char *HELP_ARG = "--help";
-const char *HAND_WRITE_ARG = "--hand";
-const char *FILE_READ_ARG = "--file";
-const char *TEST_ARG = "--test";
-const char *PARS_ARG = "--pars";
-const char *COUNT_ARG = "-c";
-
+/**
+ * @brief handle file arg
+ * @param[in, out] output CLI output struct
+ * @param[in] iter index of "--file" cli arg
+ * @param[in] argc arg count
+ * @param[in] argv args
+ */
 static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
-static void HandArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
-static void HelpArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
-static void ParsArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
-static void TestArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
+
+/**
+ * @brief handle separate input cli arg
+ * @param[in, out] output CLI output struct
+ */
+static void SepArgHandler(CLI_FLAG *output, int*, int, char**);
+
+/**
+ * @brief handle help input arg
+ * @param[in, out] output CLI output struct
+ */
+static void HelpArgHandler(CLI_FLAG *output, int*, int, char**);
+
+/**
+ * @brief handle parse input arg
+ * @param[in, out] output CLI output struct
+ */
+static void ParsArgHandler(CLI_FLAG *output, int*, int, char**);
+
+/**
+ * @brief handle test arg
+ * @param[in, out] output CLI output struct
+ */
+static void TestArgHandler(CLI_FLAG *output, int*, int, char**);
+
+/**
+ * @brief handle file arg
+ * @param[in, out] output CLI output struct
+ * @param[in] iter index of "--file" cli arg
+ * @param[in] argc arg count
+ * @param[in] argv args
+ */
 static void CountArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
 
-
+//? What do you think about making array of structs
 const char *CLI_ARGS[] = { "--file", "--hand", "--help", "--pars", "--test", "-c"};
-static void (*Handlers[6])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &HandArgHandler, &HelpArgHandler, &ParsArgHandler, &TestArgHandler, &CountArgHandler};
+static void (*Handlers[6])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &SepArgHandler, &HelpArgHandler, &ParsArgHandler, &TestArgHandler, &CountArgHandler};
 
+/**
+ * @brief search index of cli arg
+ * @param[in] targ target cli arg
+ * @return index of targ (if -1 is not a cli arg)
+ */
 static int binSearchArg(char *targ)
 {
     int beg_i = 0, end_i = 6;
@@ -53,17 +86,14 @@ CLI_FLAG getCliFlags(int argc, char *argv[])
         else
             output.main_flag = CLI_ERROR;
         if (output.main_flag == CLI_ERROR)
-        {
-            printf("Err");
             break;
-        }
     }
     return output;
 }
 
 static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
 {
-            if(output->file_flag || output->input_type == TEST_INPUT){
+            if(output->file_flag || output->input_type == CODE_TEST){
                 output->main_flag = CLI_ERROR;
                 return;
             }
@@ -74,14 +104,14 @@ static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
             }
             output->main_flag = CLI_CODE;
             if (!(output->input_type_flag)){
-                output->input_type = HAND_INPUT;
+                output->input_type = SEP_INPUT;
             }
             output->file_flag = true;
             (*iter)++;
             output->file_name_index = *iter;
 }
 
-static void HandArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
+static void SepArgHandler(CLI_FLAG *output, int*, int, char**)
 {
     if(output->input_type_flag){
         output->main_flag = CLI_ERROR;
@@ -89,15 +119,15 @@ static void HandArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
     }
     output->input_type_flag = true;
     output->main_flag = CLI_CODE;
-    output->input_type = HAND_INPUT;
+    output->input_type = SEP_INPUT;
 }
 
-static void HelpArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
+static void HelpArgHandler(CLI_FLAG *output, int*, int, char**)
 {
     output->main_flag = CLI_HELP;
 }
 
-static void ParsArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
+static void ParsArgHandler(CLI_FLAG *output, int*, int, char**)
 {
     if(output->input_type_flag){
         output->main_flag = CLI_ERROR;
@@ -108,7 +138,7 @@ static void ParsArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
     output->input_type = PARS_INPUT;
 }
 
-static void TestArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
+static void TestArgHandler(CLI_FLAG *output, int*, int, char**)
 {
     if(output->input_type_flag)
     {
@@ -117,7 +147,7 @@ static void TestArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
     }
     output->input_type_flag = true;
     output->main_flag = CLI_CODE;
-    output->input_type = TEST_INPUT;
+    output->input_type = CODE_TEST;
 }
 
 static void CountArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])

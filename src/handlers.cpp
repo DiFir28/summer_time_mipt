@@ -1,17 +1,35 @@
 #include "handlers.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "colors.h"
 #include "returns.h"
 #include "cliprocessing.h"
 #include "parser.h"
 #include "quade.h"
 
+/**
+ * @brief get coefficents based on CLI flag
+ * @param[in] input         string for get coefficents
+ * @param[in] cli_flag      parsed CLI arguments
+ * @param[in, out] equation equation for write coefficents
+ * @return OUTPUTS
+ * @see OUTPUTS
+ */
 static OUTPUTS coeffsScan(char *input, CLI_FLAG *cli_flag, QuadraticEquation *equation);
+
+/**
+ * @brief print info
+ */
 static void printInfo();
+
+/**
+ * @brief print help
+ */
 static void printHelp();
 
-OUTPUTS mainHandler(CLI_FLAG *cli_flag, char *argv[]){
+OUTPUTS mainHandler(CLI_FLAG *cli_flag){
     switch (cli_flag->main_flag)
     {
     case CLI_INFO:
@@ -47,7 +65,7 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
 {
     char input[MAX_INPUT_SIZE] = {0};
     QuadraticEquation equation = {};
-    if ((cli_flag->input_type == TEST_INPUT)){
+    if ((cli_flag->input_type == CODE_TEST)){
         return TestHandler();
     }
     FILE *file;
@@ -70,6 +88,7 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
         if (scan_out != CORRECT){
             return scan_out;
         }
+        checkQuadraticEquation(&equation);
         solveQuadraticEquation(&equation);
         printRoots(&equation);
     }
@@ -80,7 +99,8 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
 
 }
 
-QuadraticEquation hand_input_tests[] = {
+static void preparedTestsHandler(){
+    QuadraticEquation hand_input_tests[] = {
     {    4,        1,   -1.3,  0.45863087, -0.70863087,  ROOTS_TWO},
     {   -1,      3.2,    4.7, -1.09443871,  4.29443871,  ROOTS_TWO},
     {   -4,       12,     -9,         1.5,           0,  ROOTS_ONE},
@@ -90,9 +110,6 @@ QuadraticEquation hand_input_tests[] = {
     { -6.4,        0,    4.2, -0.81009258,  0.81009258,  ROOTS_TWO},
     {7.209, -265.868, 2429.6, 20.17512489, 16.70488620,  ROOTS_TWO}};
 
-
-OUTPUTS TestHandler()
-{
     QuadraticEquation equation = {};
     unsigned passed_cnt =0;
     for (unsigned int i = 0, n = (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])); i < n; i++){
@@ -100,7 +117,7 @@ OUTPUTS TestHandler()
         equation.a = hand_input_tests[i].a;
         equation.b = hand_input_tests[i].b;
         equation.c = hand_input_tests[i].c;
-        chekQuadraticEquation(&equation);
+        checkQuadraticEquation(&equation);
         solveQuadraticEquation(&equation);
         if (equation.roots_count == hand_input_tests[i].roots_count){
             if ((isZero(hand_input_tests[i].root1 - equation.root1) && isZero(hand_input_tests[i].root2 - equation.root2)) 
@@ -115,27 +132,53 @@ OUTPUTS TestHandler()
             printf(RED "Test %i fail\n" DEFAULT_COLOR, i+1);
         }
     }
-    printf("Passed %i/%lli tests", passed_cnt, (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])));
+    printf("Passed prepared tests %i/%lli tests\n", passed_cnt, (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])));
+}
+
+static void randTestHandler(){
+    QuadraticEquation equation = {};
+    srand(time(NULL));
+    const unsigned rand_max_cnt = 100;
+    unsigned rand_cnt = 0;
+    for (unsigned i = 0; i < rand_max_cnt; i++){
+        
+        checkQuadraticEquation(&equation);
+        solveQuadraticEquation(&equation);
+        if (!checkQuadraticEquationRoots(&equation)){
+            printf(RED "Test with %lg %lg %lg fail  %lf %lf \n" DEFAULT_COLOR, equation.a,  equation.b, equation.c, equation.root1, equation.root2);
+        }else{
+            rand_cnt++;
+        }
+    }
+    printf("Passed random tests %u/%u tests\n", rand_cnt, rand_max_cnt);
+}
+
+OUTPUTS TestHandler()
+{
+    preparedTestsHandler();
+    randTestHandler();
     return CORRECT;
 }
 
 static OUTPUTS coeffsScan(char *input, CLI_FLAG *cli_flag, QuadraticEquation *equation)
 {
-    if (cli_flag->input_type == HAND_INPUT){
+    if (cli_flag->input_type == SEP_INPUT){
         // printf("%s", input);
-            if (sscanf(input, "%lf%*[ ]%lf%*[ ]%lf", &(equation->a), &(equation->b), &(equation->c)) != 3){
+            if (sscanf(input, "%lf%*[ ]%lf%*[ ]%lf %s", &(equation->a), &(equation->b), &(equation->c), input) != 3){
+            return INCORRECT_PARAM;
+            if (input[0] != '\0')
             return INCORRECT_PARAM;
         }
-        chekQuadraticEquation(equation);
+        checkQuadraticEquation(equation);
     }else{
         double x_coeffs[3] = {0};
-        if (parsCoeffs(x_coeffs, input)){
+        if (parsCoeffs(input, x_coeffs)){
             return INCORRECT_PARAM;
         }
         printf("Result coefs: %lg %lg %lg\n", x_coeffs[2], x_coeffs[1], x_coeffs[0]);
-        equation->a = x_coeffs[0];
+        equation->a = x_coeffs[2];
         equation->b = x_coeffs[1];
-        equation->c = x_coeffs[2];
+        equation->c = x_coeffs[0];
     }
     return CORRECT;
 }
