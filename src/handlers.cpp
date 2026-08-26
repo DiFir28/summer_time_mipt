@@ -7,8 +7,10 @@
 #include "parser.h"
 #include "quade.h"
 
+static OUTPUTS coeffsScan(char *input, CLI_FLAG *cli_flag, QuadraticEquation *equation);
+static void printInfo();
+static void printHelp();
 
-// this is the real main
 OUTPUTS mainHandler(CLI_FLAG *cli_flag, char *argv[]){
     switch (cli_flag->main_flag)
     {
@@ -19,21 +21,21 @@ OUTPUTS mainHandler(CLI_FLAG *cli_flag, char *argv[]){
         printHelp();
         return CORRECT;
     case CLI_CODE:
-        return codeHandler(cli_flag, argv);
-    case CLI_FILE_ERROR:
-        return FILE_ERROR;
+        return MAIN_CODE;
     case CLI_ERROR:        
         return UNKNOWN_CLI_FLAGS;        
     }
     return CORRECT;    
 }
 
-void printInfo(){
+static void printInfo()
+{
     printf(YELLOW "These programm writed in summer mipt shool by FID\n" 
                   "To see commands list enter --help\n" DEFAULT_COLOR);
 }
 
-void printHelp(){
+static void printHelp()
+{
     printf(YELLOW "============HELP===========\n"
                    "--inptut              : to enter 3 separate coefficients for ax^2 + bx + c. Enter format: 'a b c'\n"
                    "--file [filename.txt] : to read 3 separate coefficients for ax^2 + bx + c from file. Enter format in file: 'a b c'\n"
@@ -41,7 +43,8 @@ void printHelp(){
                    "--test                : for run prepared tests" DEFAULT_COLOR);
 }
 
-OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[]){
+OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
+{
     char input[MAX_INPUT_SIZE] = {0};
     QuadraticEquation equation = {};
     if ((cli_flag->input_type == TEST_INPUT)){
@@ -63,20 +66,9 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[]){
             if(fgets(input, MAX_INPUT_SIZE, stdin) == NULL)
                 return INCORRECT_PARAM;
         }
-        
-        if (cli_flag->input_type == HAND_INPUT){
-            // printf("%s", input);
-                if (sscanf(input, "%lf%*[ ]%lf%*[ ]%lf", &(equation.a), &(equation.b), &(equation.c)) != 3){
-                return INCORRECT_PARAM;
-            }
-            chekQuadraticEquation(&equation);
-        }else{
-            double x_coeffs[3] = {0};
-            parsCoeffs(x_coeffs, input);
-            printf("Result coefs: %lg %lg %lg\n", x_coeffs[2], x_coeffs[1], x_coeffs[0]);
-            equation.a = x_coeffs[0];
-            equation.b = x_coeffs[1];
-            equation.c = x_coeffs[2];
+        OUTPUTS scan_out = coeffsScan(input, cli_flag, &equation); 
+        if (scan_out != CORRECT){
+            return scan_out;
         }
         solveQuadraticEquation(&equation);
         printRoots(&equation);
@@ -88,7 +80,7 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[]){
 
 }
 
-QuadraticEquation hand_input_tests[]={
+QuadraticEquation hand_input_tests[] = {
     {    4,        1,   -1.3,  0.45863087, -0.70863087,  ROOTS_TWO},
     {   -1,      3.2,    4.7, -1.09443871,  4.29443871,  ROOTS_TWO},
     {   -4,       12,     -9,         1.5,           0,  ROOTS_ONE},
@@ -96,11 +88,11 @@ QuadraticEquation hand_input_tests[]={
     {    0,        0,   -6.6,           0,           0, ROOTS_ZERO},
     {    0,        0,      0,           0,           0,  ROOTS_INF},
     { -6.4,        0,    4.2, -0.81009258,  0.81009258,  ROOTS_TWO},
-    {7.209, -265.868, 2429.6, 20.17512489, 16.70488620,  ROOTS_TWO}
-};
+    {7.209, -265.868, 2429.6, 20.17512489, 16.70488620,  ROOTS_TWO}};
 
 
-OUTPUTS TestHandler(){
+OUTPUTS TestHandler()
+{
     QuadraticEquation equation = {};
     unsigned passed_cnt =0;
     for (unsigned int i = 0, n = (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])); i < n; i++){
@@ -124,5 +116,26 @@ OUTPUTS TestHandler(){
         }
     }
     printf("Passed %i/%lli tests", passed_cnt, (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])));
+    return CORRECT;
+}
+
+static OUTPUTS coeffsScan(char *input, CLI_FLAG *cli_flag, QuadraticEquation *equation)
+{
+    if (cli_flag->input_type == HAND_INPUT){
+        // printf("%s", input);
+            if (sscanf(input, "%lf%*[ ]%lf%*[ ]%lf", &(equation->a), &(equation->b), &(equation->c)) != 3){
+            return INCORRECT_PARAM;
+        }
+        chekQuadraticEquation(equation);
+    }else{
+        double x_coeffs[3] = {0};
+        if (parsCoeffs(x_coeffs, input)){
+            return INCORRECT_PARAM;
+        }
+        printf("Result coefs: %lg %lg %lg\n", x_coeffs[2], x_coeffs[1], x_coeffs[0]);
+        equation->a = x_coeffs[0];
+        equation->b = x_coeffs[1];
+        equation->c = x_coeffs[2];
+    }
     return CORRECT;
 }

@@ -9,18 +9,16 @@
 #include "colors.h"
 
 
-// void initQuadraticEquation(QuadraticEquation *q){
-//     *q = {.a = 0, .b = 0, .c = 0, .root1 = 0, .root2 = 0, .roots_count = ROOTS_ZERO};
-// }
-
-void checkLinkS(QuadraticEquation *q, const char* file, unsigned line){
+void checkLinkS(QuadraticEquation *q, const char* file, unsigned line)
+{
     if ((q==NULL)){
         printf(RED "Incorrect Link, file %s line %d.\n" DEFAULT_COLOR, file, line);
         abort();
     }
 }
 
-void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned line){
+void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned line)
+{
     checkLink(q);
     if (!(isfinite(q->a) && isfinite(q->b) && isfinite(q->c))){
         printf(RED "Incorrect coefficients, file %s line %d.\n" DEFAULT_COLOR, file, line);
@@ -28,12 +26,14 @@ void chekQuadraticEquationS(QuadraticEquation *q, const char* file, unsigned lin
     }
 }
 
-double findDiscriminant(QuadraticEquation *q){
+double findDiscriminant(QuadraticEquation *q)
+{
     checkLink(q);
     return (q->b * q->b - (4 * q->a * q->c));
 }
 
-static void solveAsLinear(QuadraticEquation *q){
+static void solveAsLinear(QuadraticEquation *q)
+{
     checkLink(q);
     if (isZero(q->b)){
         if (isZero(q->c)){
@@ -53,7 +53,8 @@ static void solveAsLinear(QuadraticEquation *q){
     }
 }
 
-static void solveAsQuadraticEquation(QuadraticEquation *q){  
+static void solveAsQuadraticEquation(QuadraticEquation *q)
+{  
     checkLink(q);
     double D = findDiscriminant(q);
 
@@ -83,7 +84,8 @@ static void solveAsQuadraticEquation(QuadraticEquation *q){
     }
 }
 
-void solveQuadraticEquation(QuadraticEquation *q){
+void solveQuadraticEquation(QuadraticEquation *q)
+{
     checkLink(q);
     if (isZero(q->a))
     {
@@ -93,7 +95,8 @@ void solveQuadraticEquation(QuadraticEquation *q){
     solveAsQuadraticEquation(q);
 }
 
-void printRoots(QuadraticEquation *q){
+void printRoots(QuadraticEquation *q)
+{
     checkLink(q);
     switch (q->roots_count)
     {
@@ -113,6 +116,7 @@ void printRoots(QuadraticEquation *q){
     }
 }
 
-bool isZero(double A){
+bool isZero(double A)
+{
     return (fabs(A) < EPSILON);
 }

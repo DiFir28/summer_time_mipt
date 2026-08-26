@@ -5,8 +5,7 @@ typedef enum{
     CLI_INFO = 0,
     CLI_HELP = 1,
     CLI_CODE = 2,
-    CLI_FILE_ERROR = 3,
-    CLI_ERROR = 5
+    CLI_ERROR = 3
 }CLI_MAIN_FLAG;
 
 typedef enum{

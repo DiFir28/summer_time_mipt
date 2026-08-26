@@ -12,7 +12,8 @@
 
 static const char *signs = "+-*/^=";
 
-bool parsCoeffsSys(double x_coeffs[/* index ~ power of x*/], unsigned size, char *input){
+bool parsCoeffsSys(double x_coeffs[/* index ~ power of x*/], unsigned size, char *input)
+{
     if (size / sizeof(double) < 3){
         return true;
     }
@@ -60,7 +61,8 @@ bool parsCoeffsSys(double x_coeffs[/* index ~ power of x*/], unsigned size, char
     return false;
 }
 
-bool parsNumber(char *input,  const char *prev_sign_ptr, double *current_number_multiply, int *current_x_power){
+bool parsNumber(char *input,  const char *prev_sign_ptr, double *current_number_multiply, int *current_x_power)
+{
     static double prev_number = 0;
     char *current_number_end = input;
     double current_number = strtod(prev_sign_ptr + 1, &current_number_end);
@@ -94,7 +96,8 @@ bool parsNumber(char *input,  const char *prev_sign_ptr, double *current_number_
     return false;
 }
 
-bool parsSign(const char *sign_ptr, int *current_x_power,  double x_coeffs[], double *current_number_multiply, int eqals_cnt){
+bool parsSign(const char *sign_ptr, int *current_x_power,  double x_coeffs[], double *current_number_multiply, int eqals_cnt)
+{
     static  bool sign = true; // true - plus false - minus ;
     if (sign_ptr == NULL || *sign_ptr == '+' || *sign_ptr == '-' || *sign_ptr == '='){
         if (*current_x_power > 2 || *current_x_power < 0){
@@ -119,7 +122,8 @@ bool parsSign(const char *sign_ptr, int *current_x_power,  double x_coeffs[], do
     return false;
 }
 
-bool trashCleaner(char *input){
+bool trashCleaner(char *input)
+{
     const char *validChr = "0123456789.x+-*/^=\n\0";
     unsigned J = 0;
     for(unsigned I = 0, n =  unsigned(strlen(input)); I < n; I++){
