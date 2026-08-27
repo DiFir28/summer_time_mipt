@@ -36,7 +36,12 @@ Vector2 converVtoQ(Vector2 target, offset axis_offset);
 void visualInit();
 
 /**
- * @brief Draw Axis and Grid based on offset 
+ * @brief Draw main axis based on offset 
+ */
+void drawMainAxis(offset axis_offset);
+
+/**
+ * @brief Draw axis and Grid based on offset 
  */
 void drawMainGrid(Vector2 axis_offset);
 

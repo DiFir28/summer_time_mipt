@@ -12,7 +12,7 @@
  * @param[in] argc arg count
  * @param[in] argv args
  */
-static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
+static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char**);
 
 /**
  * @brief handle separate input cli arg
@@ -55,8 +55,18 @@ static void VisArgHandler(CLI_FLAG *output, int*, int, char**);
 static void CountArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
 
 //? What do you think about making array of structs
-const char *CLI_ARGS[] = { "--file", "--hand", "--help", "--pars", "--test", "--vis", "-c"};
-static void (*Handlers[7])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &SepArgHandler, &HelpArgHandler, &ParsArgHandler, &TestArgHandler, &VisArgHandler, &CountArgHandler};
+// const char *CLI_ARGS[] = { "--file", "--hand", "--help", "--pars", "--test", "--vis", "-c"};
+// static void (*Handlers[7])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &SepArgHandler, &HelpArgHandler, &ParsArgHandler, &TestArgHandler, &VisArgHandler, &CountArgHandler};
+
+CLI_FLAG_HANDLER CLI_ARGS[] = {
+    {"--file", &FileArgHandler},
+    {"--hand", &SepArgHandler},
+    {"--help", &HelpArgHandler},
+    {"--pars", &ParsArgHandler},
+    {"--test", &TestArgHandler},
+    {"--vis",  &VisArgHandler},
+    {"-c",     &CountArgHandler}
+};
 
 /**
  * @brief search index of cli arg
@@ -65,10 +75,10 @@ static void (*Handlers[7])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &Se
  */
 static int binSearchArg(char *targ)
 {
-    int beg_i = 0, end_i = 6;
+    int beg_i = 0, end_i = sizeof(CLI_ARGS) / sizeof(CLI_ARGS[0]);
     while (beg_i != end_i){
         int cur_i = (beg_i + end_i) / 2;
-        int cond = strcmp(CLI_ARGS[cur_i], targ);
+        int cond = strcmp(CLI_ARGS[cur_i].flag, targ);
         if (cond < 0){
             if (beg_i == cur_i)
                 break;
@@ -89,7 +99,7 @@ CLI_FLAG getCliFlags(int argc, char *argv[])
     for (int i = 1; i < argc; i++){
         int ind = binSearchArg(argv[i]);
         if (ind >= 0)
-            Handlers[ind]( &output, &i, argc, argv);
+            CLI_ARGS[ind].handler( &output, &i, argc, argv);
         else
             output.main_flag = CLI_ERROR;
         if (output.main_flag == CLI_ERROR)
@@ -98,7 +108,7 @@ CLI_FLAG getCliFlags(int argc, char *argv[])
     return output;
 }
 
-static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
+static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char**)
 {
             if(output->file_flag || output->input_type == CODE_TEST){
                 output->main_flag = CLI_ERROR;
@@ -162,6 +172,9 @@ static void VisArgHandler(CLI_FLAG *output, int*, int, char**){
         output->main_flag = CLI_ERROR;
         return;
     }
+    if (!output->input_type_flag){
+        output->input_type = SEP_INPUT;
+    }
     output->visual_flag = true;
     output->main_flag = CLI_CODE;
 }
@@ -174,6 +187,9 @@ static void CountArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
         if (endN == NULL || &(argv[*iter+1]) != endN){
             output->input_count = raw_n;
             (*iter)++;
+            if (!output->input_type_flag){
+                output->input_type = SEP_INPUT;
+            }
         }
     }
 }

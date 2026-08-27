@@ -10,11 +10,12 @@
 #include "colors.h"
 #include "quade.h"
 
+const unsigned coefficents_count = 3;
 static const char *signs = "+-*/^=";
 
 bool parseCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsigned size)
 {
-    if (size / sizeof(double) < 3){ // constant
+    if (size / sizeof(double) < coefficents_count){ // constant
         return true;
     }
     if (trashCleaner(input))
@@ -136,7 +137,7 @@ bool trashCleaner(char *input)
     const char *validChr = "0123456789.x+-*/^=\n\0";
     unsigned J = 0;
     for(unsigned I = 0, n =  unsigned(strlen(input)); I < n; I++){
-        if (input[I] == ' '){
+        if (input[I] == ' ' || input[I] == '\t'){
             continue;
         }          
         if (strchr(validChr, input[I]) == NULL){
@@ -149,10 +150,13 @@ bool trashCleaner(char *input)
             input[J-1] = '^';
             continue;
         }
-        if (input[I] == '^'){
+        if (input[I] == '^' || input[I] == '/'){
             if (input[I+1] == 'x'){
                 return true;
             }
+        }
+        if (input[I] == 'x' && isdigit(input[I+1])){
+                return true;
         }
         input[J] = input[I];
         J++;

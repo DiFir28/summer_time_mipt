@@ -41,6 +41,14 @@ struct CLI_FLAG{
 };
 
 /**
+ * @brief struct for handle cli flag
+ */
+struct CLI_FLAG_HANDLER{
+    const char* flag;
+    void (*handler)(CLI_FLAG*, int*, int, char**);
+};
+
+/**
  * @brief CLI arg parser
  * @param[in] argc arg count
  * @param[in] argv args

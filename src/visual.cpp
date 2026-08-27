@@ -27,6 +27,27 @@ void visualInit(){
     UnloadImage(icon);
 }
 
+void drawMainAxis(offset axis_offset){
+    //Draw OX and OY
+    Vector2 p1 = { 0, axis_offset.coords.y};
+    Vector2 p2 = {float(WINDOWS_SIZE), axis_offset.coords.y};
+    DrawLineEx(p1, p2, 4, DARKGRAY);
+    DrawText("X", WINDOWS_SIZE - 25, axis_offset.coords.y - 33, 30, DARKGRAY);
+    DrawTriangle((Vector2){WINDOWS_SIZE + 4, axis_offset.coords.y}, 
+                 (Vector2){WINDOWS_SIZE - 30, axis_offset.coords.y - 10},
+                 (Vector2){WINDOWS_SIZE - 30, axis_offset.coords.y + 10},
+                 DARKGRAY);
+
+    Vector2 p3 = { axis_offset.coords.x, 0};
+    Vector2 p4 = { axis_offset.coords.x, float(WINDOWS_SIZE)};
+    DrawLineEx(p3, p4, 4, DARKGRAY);
+    DrawText("Y",  axis_offset.coords.x + 20, 10, 30, DARKGRAY);
+    DrawTriangle((Vector2){axis_offset.coords.x, - 4}, 
+                 (Vector2){axis_offset.coords.x - 10, 30},
+                 (Vector2){axis_offset.coords.x + 10, 30},
+                 DARKGRAY);
+}
+
 void drawMainGrid(offset axis_offset){
     char title[12] = "";
     
@@ -70,13 +91,7 @@ void drawMainGrid(offset axis_offset){
         sprintf(title, "%i", - line_cnt);
         DrawText(title, negI.x + 3, negI.y + 5, 30, LIGHTGRAY);
     }
-    //Draw OX and OY
-    Vector2 p1 = { 0, axis_offset.coords.y};
-    Vector2 p2 = {float(WINDOWS_SIZE), axis_offset.coords.y};
-    DrawLineEx(p1, p2, 4, DARKGRAY);
-    Vector2 p3 = { axis_offset.coords.x, 0};
-    Vector2 p4 = { axis_offset.coords.x, float(WINDOWS_SIZE)};
-    DrawLineEx(p3, p4, 4, DARKGRAY);
+    drawMainAxis(axis_offset);
 }
 
 void drawQuadraticEquation( QuadraticEquation *q, offset vis_offset){
@@ -91,24 +106,17 @@ void drawQuadraticEquation( QuadraticEquation *q, offset vis_offset){
     Vector2 root2 = {};
     switch (q->roots_count)
     {
+    case ROOTS_TWO:
+        root2 = converQtoV((Vector2){float(q->root2), 0}, vis_offset);
+        DrawCircle(root2.x, root2.y, 6, RED);
+        sprintf(title, "(%g, 0)", q->root2);
+        DrawText(title, root2.x - 30, root2.y - 30, 30, RED);
     case ROOTS_ONE:
         root1 = converQtoV((Vector2){float(q->root1), 0}, vis_offset);
         DrawCircle(root1.x, root1.y, 6, RED);
         sprintf(title, "(%g, 0)", q->root1);
         DrawText(title, q->root1 * vis_offset.scale.x + vis_offset.coords.x - 30, vis_offset.coords.y - 30, 30, RED);
         break;
-
-    case ROOTS_TWO:
-        root1 = converQtoV((Vector2){float(q->root1), 0}, vis_offset);
-        DrawCircle(root1.x, root1.y, 6, RED);
-        sprintf(title, "(%g, 0)", q->root1);
-        DrawText(title, root1.x - 30, root1.y - 30, 30, RED);
-        root2 = converQtoV((Vector2){float(q->root2), 0}, vis_offset);
-        DrawCircle(root2.x, root2.y, 6, RED);
-        sprintf(title, "(%g, 0)", q->root2);
-        DrawText(title, root2.x - 30, root2.y - 30, 30, RED);
-        break;
-
     default:
         break;
     }
