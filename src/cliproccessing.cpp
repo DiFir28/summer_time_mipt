@@ -98,7 +98,7 @@ static void FileArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
                 return;
             }
             if ((*iter)+1 >= argc){
-                printf(YELLOW "You must give file name\n" DEFAULT_COLOR);
+                printf(YELLOW_ "You must give file name\n" DEFAULT_COLOR);
                 output->main_flag = CLI_ERROR;
                 return;
             }

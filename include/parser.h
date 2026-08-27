@@ -39,6 +39,7 @@ bool parsNumber(char *input,  const char *prev_sign_ptr, double *current_number_
  * @brief function parse signs at the end of summand
  * @param[in] sign_ptr                      pointer to last sign of summand
  * @param[in] eqals_cnt                     count of equals signs for control sign(+ or -) in coefficents
+ * @param[in, out] sign                     current sign
  * @param[in, out] x_coeffs                 array for 3 coefficents (coeffs changed affter end of summand)
  * @param[in, out] current_number_multiply  value of current multiply (equals zero after end of summand)
  * @param[in, out] current_x_power          power of X in current summand (equals zero after end of summand)
@@ -46,7 +47,7 @@ bool parsNumber(char *input,  const char *prev_sign_ptr, double *current_number_
  * @retval true         error: incorrect input eqation
  * @retval false        no error
  */
-bool parsSign(const char *sign_ptr, int eqals_cnt, double x_coeffs[], double *current_number_multiply, int *current_x_power);
+bool parsSign(const char *sign_ptr, int eqals_cnt, bool *sign, double x_coeffs[], double *current_number_multiply, int *current_x_power);
 
 /**
  * @brief clear from useless space and precheck of correct chars in input

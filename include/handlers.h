@@ -7,6 +7,7 @@
  */
 #include "returns.h"
 #include "cliprocessing.h"
+#include "quade.h"
 
 /**
  * @brief handle CLI arguments
@@ -20,10 +21,11 @@ OUTPUTS mainHandler(CLI_FLAG *cli_flag);
  * @brief run code based on CLI arguments
  * @param[in] cli_flag  parsed CLI arguments
  * @param[in] argv      CLI arguments
+ * @param[out] q        quadratic eqation for visual
  * @return OUTPUTS
  * @see OUTPUTS
  */
-OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[]);
+OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[], QuadraticEquation *q);
 
 /**
  * @brief run unitets based on CLI arguments

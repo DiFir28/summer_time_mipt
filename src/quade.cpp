@@ -12,7 +12,7 @@
 void checkLinkSys(QuadraticEquation *q, const char* file, unsigned line)
 {
     if ((q==NULL)){
-        printf(RED "Incorrect Link, file %s line %d.\n" DEFAULT_COLOR, file, line);
+        printf(RED_ "Incorrect Link, file %s line %d.\n" DEFAULT_COLOR, file, line);
         abort();
     }
 }
@@ -21,7 +21,7 @@ void checkQuadraticEquationSys(QuadraticEquation *q, const char* file, unsigned 
 {
     checkLink(q);
     if (!(isfinite(q->a) && isfinite(q->b) && isfinite(q->c))){
-        printf(RED "Incorrect coefficients, file %s line %d.\n" DEFAULT_COLOR, file, line);
+        printf(RED_ "Incorrect coefficients, file %s line %d.\n" DEFAULT_COLOR, file, line);
         abort();
     }
 }
@@ -104,22 +104,26 @@ void solveQuadraticEquation(QuadraticEquation *q)
     solveAsQuadraticEquation(q);
 }
 
+double calcValQuadraticEquation(QuadraticEquation *q, double x){
+    return (q->a * x * x + q->b * x + q->c);
+}
+
 void printRoots(QuadraticEquation *q)
 {
     checkLink(q);
     switch (q->roots_count)
     {
     case ROOTS_INF:
-        printf(GREEN "Your quadratic equation has infinity roots.\n" DEFAULT_COLOR);
+        printf(GREEN_ "Your quadratic equation has infinity roots.\n" DEFAULT_COLOR);
         break;
     case ROOTS_ZERO:
-        printf(GREEN "Your quadratic equation has no roots.\n" DEFAULT_COLOR);
+        printf(GREEN_ "Your quadratic equation has no roots.\n" DEFAULT_COLOR);
         break;
     case ROOTS_ONE:
-        printf(GREEN "Your quadratic equation has 1 root. Root: %lg\n" DEFAULT_COLOR, q->root1);
+        printf(GREEN_ "Your quadratic equation has 1 root. Root: %lg\n" DEFAULT_COLOR, q->root1);
         break;
     case ROOTS_TWO:
-        printf(GREEN "Your quadratic equation has 2 roots. Roots: %lg, %lg\n" DEFAULT_COLOR, q->root1, q->root2);
+        printf(GREEN_ "Your quadratic equation has 2 roots. Roots: %lg, %lg\n" DEFAULT_COLOR, q->root1, q->root2);
         break;    
 
     }
@@ -134,18 +138,18 @@ bool checkQuadraticEquationRoots(QuadraticEquation *q){
     case ROOTS_ZERO:
         return (calcDiscriminant(q) < 0);
     case ROOTS_ONE:
-        return isZero(q->a * pow(q->root1, 2) + q->b * q->root1 + q->c);
+        return isZero(calcValQuadraticEquation(q, q->root1));
     case ROOTS_TWO:
-        return ( isZero(q->a * pow(q->root1, 2) + q->b * q->root1 + q->c) && isZero(q->a * pow(q->root2, 2) + q->b * q->root2 + q->c));
+        return ( isZero(calcValQuadraticEquation(q, q->root1)) && isZero(calcValQuadraticEquation(q, q->root2)));
     }
     return false;
 }
 
 void randQuadraticEquation(QuadraticEquation *q){
     q = {};
-    q->a = (rand()%1000000 - 500000)/1000;
-    q->b = (rand()%1000000 - 500000)/1000;
-    q->c = (rand()%1000000 - 500000)/1000;
+    q->a = (rand()%1000000 - 500000)/1000.0;
+    q->b = (rand()%1000000 - 500000)/1000.0;
+    q->c = (rand()%1000000 - 500000)/1000.0;
 }
 
 bool isZero(double num)

@@ -14,7 +14,7 @@ static const char *signs = "+-*/^=";
 
 bool parsCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsigned size)
 {
-    if (size / sizeof(double) < 3){
+    if (size / sizeof(double) < 3){ // constant
         return true;
     }
     if (trashCleaner(input))
@@ -25,19 +25,23 @@ bool parsCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsign
     unsigned eqals_cnt =0;    
     double current_number_multiply = 1; 
     int current_x_power = 0;
-    const char *sign_ptr = nearestSign(input+1); //? why???
+    const char *sign_ptr = nearestSign(input+1);
     const char *prev_sign_ptr = input;
-
+    bool sign = true; // true - plus false - minus ;
+    if (*prev_sign_ptr == '-'){
+        sign = false;
+    }
     while (prev_sign_ptr != NULL){
         if (*prev_sign_ptr == '='){
             eqals_cnt+=1;
             if (eqals_cnt > 1){
-                printf(YELLOW "WARNING: Your input more than 1 eqals sign, eqation will consist of first 2 parts only\n");
+                printf(YELLOW_ "WARNING: Your input more than 1 eqals sign, eqation will consist of first 2 parts only\n");
                 break;
             }
         }        
 
-        if (*(prev_sign_ptr + 1) == 'x'){
+        if (*(prev_sign_ptr + 1) == 'x' ){
+            
             current_x_power += 1;
         }else
         {   
@@ -45,7 +49,7 @@ bool parsCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsign
                 return true;
         }
 
-        if (parsSign(sign_ptr, eqals_cnt, x_coeffs, &current_number_multiply, &current_x_power))
+        if (parsSign(sign_ptr, eqals_cnt, &sign, x_coeffs, &current_number_multiply, &current_x_power))
             return true;
 
         prev_sign_ptr = sign_ptr;
@@ -65,7 +69,7 @@ bool parsNumber(char *input,  const char *prev_sign_ptr, double *current_number_
     static double prev_number = 0;
     char *current_number_end = input;
     double current_number = strtod(prev_sign_ptr + 1, &current_number_end);
-    if (input == prev_sign_ptr){
+    if (input == prev_sign_ptr){ //TODO: KOSTYL!
         if (isdigit(*input)){
         current_number = strtod(prev_sign_ptr, &current_number_end);
         }else if(*prev_sign_ptr == 'x'){
@@ -97,25 +101,25 @@ bool parsNumber(char *input,  const char *prev_sign_ptr, double *current_number_
     return false;
 }
 
-bool parsSign(const char *sign_ptr, int eqals_cnt, double x_coeffs[], double *current_number_multiply, int *current_x_power)
+bool parsSign(const char *sign_ptr, int eqals_cnt, bool *sign, double x_coeffs[], double *current_number_multiply, int *current_x_power)
 {
-    static  bool sign = true; // true - plus false - minus ;
+    // static  bool sign = true; // true - plus false - minus ;
     if (sign_ptr == NULL || *sign_ptr == '+' || *sign_ptr == '-' || *sign_ptr == '='){
         if (*current_x_power > 2 || *current_x_power < 0){
             // printf(RED "WRONG POWER" DEFAULT_COLOR);
             return true;
         }
 
-        if (sign^(eqals_cnt)){
+        if (*sign^(eqals_cnt)){
             x_coeffs[*current_x_power] += *current_number_multiply;
         } else {
             x_coeffs[*current_x_power] -= *current_number_multiply;
         }            
         // printf(YELLOW "power %d number %lg| " DEFAULT_COLOR, current_x_power, current_number_multiply);
         if (sign_ptr != NULL && (*sign_ptr == '+' || *sign_ptr == '=')){
-            sign = true;
+            *sign = true;
         } else if (sign_ptr != NULL){
-            sign = false;
+            *sign = false;
         }
         *current_x_power = 0;
         *current_number_multiply = 1;

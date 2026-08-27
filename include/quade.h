@@ -75,6 +75,14 @@ double calcDiscriminant(QuadraticEquation *q);
 void solveQuadraticEquation(QuadraticEquation *q);
 
 /**
+ * @brief Calc value of quadratic eqation in point X
+ * @param[in] q quadratic eqation
+ * @param[in] x the x for value
+ * @return double Value in point X
+ */
+double calcValQuadraticEquation(QuadraticEquation *q, double x);
+
+/**
  * @brief Print roots of qadratic eqation
  * @param[in] q     quadratic eqation, which roots will be print
  */

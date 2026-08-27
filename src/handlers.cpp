@@ -3,11 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "colors.h"
 #include "returns.h"
 #include "cliprocessing.h"
 #include "parser.h"
 #include "quade.h"
+
 
 /**
  * @brief get coefficents based on CLI flag
@@ -48,22 +50,22 @@ OUTPUTS mainHandler(CLI_FLAG *cli_flag){
 
 static void printInfo()
 {
-    printf(YELLOW "These programm writed in summer mipt shool by FID\n" 
+    printf(YELLOW_ "These programm writed in summer mipt shool by FID\n" 
                   "To see commands list enter --help\n" DEFAULT_COLOR);
 }
 
 static void printHelp()
 {
-    printf(YELLOW "============HELP===========\n"
+    printf(YELLOW_ "============HELP===========\n"
                    "--inptut              : to enter 3 separate coefficients for ax^2 + bx + c. Enter format: 'a b c'\n"
                    "--file [filename.txt] : to read 3 separate coefficients for ax^2 + bx + c from file. Enter format in file: 'a b c'\n"
                    "--pars                : for input quadratic eqation in free format. Suported symbols: 0123456789.x+-*/^=\n"
                    "--test                : for run prepared tests" DEFAULT_COLOR);
 }
 
-OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
+OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[], QuadraticEquation *q)
 {
-    char input[MAX_INPUT_SIZE] = {0};
+    char input[MAX_INPUT_SIZE] = {};
     QuadraticEquation equation = {};
     if ((cli_flag->input_type == CODE_TEST)){
         return TestHandler();
@@ -80,7 +82,7 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
             if(fgets(input, MAX_INPUT_SIZE, file) == NULL)
                 return FILE_ERROR;
         }else{
-            printf(GREEN "Your input:" DEFAULT_COLOR);
+            printf(GREEN_ "Your input:" DEFAULT_COLOR);
             if(fgets(input, MAX_INPUT_SIZE, stdin) == NULL)
                 return INCORRECT_PARAM;
         }
@@ -91,6 +93,7 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
         checkQuadraticEquation(&equation);
         solveQuadraticEquation(&equation);
         printRoots(&equation);
+        *q = equation;
     }
     if(cli_flag->file_flag){
         fclose(file);
@@ -99,6 +102,10 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[])
 
 }
 
+
+/**
+ * @brief complite 8 prepared tests
+ */
 static void preparedTestsHandler(){
     QuadraticEquation hand_input_tests[] = {
     {    4,        1,   -1.3,  0.45863087, -0.70863087,  ROOTS_TWO},
@@ -125,38 +132,109 @@ static void preparedTestsHandler(){
                 passed_cnt++;
             }
             else{
-                printf(RED "Test %i fail  %lf %lf \n" DEFAULT_COLOR, i+1, equation.root1, equation.root2);
+                printf(RED_ "Test %i fail  %lf %lf \n" DEFAULT_COLOR, i+1, equation.root1, equation.root2);
             }
         }
         else{
-            printf(RED "Test %i fail\n" DEFAULT_COLOR, i+1);
+            printf(RED_ "Test %i fail\n" DEFAULT_COLOR, i+1);
         }
     }
     printf("Passed prepared tests %i/%lli tests\n", passed_cnt, (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])));
 }
 
-static void randTestHandler(){
+/**
+ * @brief complite N random tests
+ * @param[in] cnt_tests how many random tests will be complite
+ */
+static void randTestHandler(const unsigned cnt_tests){
     QuadraticEquation equation = {};
     srand(time(NULL));
-    const unsigned rand_max_cnt = 100;
-    unsigned rand_cnt = 0;
-    for (unsigned i = 0; i < rand_max_cnt; i++){
+    unsigned passed_rand_cnt = 0;
+    for (unsigned i = 0; i < cnt_tests; i++){
         
         checkQuadraticEquation(&equation);
         solveQuadraticEquation(&equation);
         if (!checkQuadraticEquationRoots(&equation)){
-            printf(RED "Test with %lg %lg %lg fail  %lf %lf \n" DEFAULT_COLOR, equation.a,  equation.b, equation.c, equation.root1, equation.root2);
+            printf(RED_ "Test with %lg %lg %lg fail  %lf %lf \n" DEFAULT_COLOR, equation.a,  equation.b, equation.c, equation.root1, equation.root2);
         }else{
-            rand_cnt++;
+            passed_rand_cnt++;
         }
     }
-    printf("Passed random tests %u/%u tests\n", rand_cnt, rand_max_cnt);
+    printf("Passed random tests %u/%u tests\n", passed_rand_cnt, cnt_tests);
+}
+
+/**
+ * @brief complite N random tests
+ * @param[in] cnt_tests     how many random tests will be complite
+ * @param[in] cnt_summand   max number of summand that will be generated
+ */
+static void parseTest(unsigned cnt_tests, unsigned cnt_summand){
+    //TODO: Add corner case "-x^2 = -1"
+    cnt_summand--;
+    unsigned pass_cnt = 0;
+    srand(time(NULL));
+    for (unsigned j = 0; j < cnt_tests; j++){
+        char input[MAX_INPUT_SIZE] = {0};
+        double generat_coeffs[3] = {};
+        int Ind = 0;
+        unsigned summand_cnt = rand()%cnt_summand+1;
+        for (unsigned i = 0; i < summand_cnt; i++){
+            double cur_coeff = (rand()%100000)/1000.0; // make call function
+            bool sign = rand()%2;
+            if (sign){
+                input[Ind] = '+';
+            }else{
+                input[Ind] = '-';
+            }
+            Ind++;
+            Ind+= sprintf(input+Ind, "%.3f", cur_coeff);
+            
+            unsigned x_pow = rand()%3;
+            if (rand()%2 && x_pow != 0){
+                input[Ind++] = '*';
+            }
+            if (x_pow == 2){            
+                unsigned write_type = rand()%2;
+                if(write_type){
+                    strcat(input, "x^2");
+                    Ind+=3;
+                }else{
+                    strcat(input, "x*x");
+                    Ind+=3;
+                }
+            }else if(x_pow == 1){
+                input[Ind] = 'x';
+                Ind+=1;
+            }
+
+            if (sign){
+                generat_coeffs[x_pow] += cur_coeff;
+            }else{
+                generat_coeffs[x_pow] -= cur_coeff;
+            }
+        }
+        
+        double parse_coeffs[3] = {};
+        if (parsCoeffs(input, parse_coeffs)){
+                printf(RED_ "Wrong generate" DEFAULT_COLOR);
+        }
+        if (!(isZero(generat_coeffs[2] - parse_coeffs[2]) && isZero(generat_coeffs[1] - parse_coeffs[1]) && isZero(generat_coeffs[0] - parse_coeffs[0]))){
+            printf(RED_ "%s\n" DEFAULT_COLOR,input);
+            printf("Expected: %lg %lg %lg", generat_coeffs[2], generat_coeffs[1], generat_coeffs[0]);
+            printf("Gived: %lg %lg %lg", parse_coeffs[2], parse_coeffs[1], parse_coeffs[0]);
+        }else{
+            printf(GREEN_ "%s\n" DEFAULT_COLOR,input);
+            pass_cnt++;
+        }
+    }
+    printf("Passed parse tests %u/%u tests\n", pass_cnt, cnt_tests);
 }
 
 OUTPUTS TestHandler()
 {
     preparedTestsHandler();
-    randTestHandler();
+    randTestHandler(100);
+    parseTest(20, 10);
     return CORRECT;
 }
 
