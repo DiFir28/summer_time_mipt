@@ -38,6 +38,13 @@ static void ParsArgHandler(CLI_FLAG *output, int*, int, char**);
  */
 static void TestArgHandler(CLI_FLAG *output, int*, int, char**);
 
+
+/**
+ * @brief handle visual arg
+ * @param[in, out] output CLI output struct
+ */
+static void VisArgHandler(CLI_FLAG *output, int*, int, char**);
+
 /**
  * @brief handle file arg
  * @param[in, out] output CLI output struct
@@ -48,8 +55,8 @@ static void TestArgHandler(CLI_FLAG *output, int*, int, char**);
 static void CountArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[]);
 
 //? What do you think about making array of structs
-const char *CLI_ARGS[] = { "--file", "--hand", "--help", "--pars", "--test", "-c"};
-static void (*Handlers[6])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &SepArgHandler, &HelpArgHandler, &ParsArgHandler, &TestArgHandler, &CountArgHandler};
+const char *CLI_ARGS[] = { "--file", "--hand", "--help", "--pars", "--test", "--vis", "-c"};
+static void (*Handlers[7])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &SepArgHandler, &HelpArgHandler, &ParsArgHandler, &TestArgHandler, &VisArgHandler, &CountArgHandler};
 
 /**
  * @brief search index of cli arg
@@ -140,7 +147,7 @@ static void ParsArgHandler(CLI_FLAG *output, int*, int, char**)
 
 static void TestArgHandler(CLI_FLAG *output, int*, int, char**)
 {
-    if(output->input_type_flag)
+    if(output->input_type_flag || output->visual_flag)
     {
         output->main_flag = CLI_ERROR;
         return;
@@ -148,6 +155,15 @@ static void TestArgHandler(CLI_FLAG *output, int*, int, char**)
     output->input_type_flag = true;
     output->main_flag = CLI_CODE;
     output->input_type = CODE_TEST;
+}
+
+static void VisArgHandler(CLI_FLAG *output, int*, int, char**){
+    if (output->input_type == CODE_TEST){
+        output->main_flag = CLI_ERROR;
+        return;
+    }
+    output->visual_flag = true;
+    output->main_flag = CLI_CODE;
 }
 
 static void CountArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])

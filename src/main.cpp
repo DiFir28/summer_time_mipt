@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     if (handler_output == MAIN_CODE){
         QuadraticEquation Q = {};
         OUTPUTS code_output = codeHandler(&CLI_OUT, argv, &Q);
-        if (code_output == CORRECT && CLI_OUT.input_type != CODE_TEST){
+        if (code_output == CORRECT && CLI_OUT.input_type != CODE_TEST && CLI_OUT.visual_flag){
             visualInit();
             visualLoop(&Q);
             CloseWindow();

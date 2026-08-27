@@ -36,6 +36,7 @@ struct CLI_FLAG{
     int file_name_index;            /**< index of file name */
     bool input_type_flag : 1;       /**< flag that input type already inputed */
     bool file_flag : 1;             /**< file source flag */
+    bool visual_flag : 1;             /**< file source flag */
     // bool shoort_output_flag : 1;  
 };
 

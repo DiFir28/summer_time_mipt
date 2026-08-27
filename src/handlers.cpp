@@ -66,6 +66,7 @@ static void printHelp()
 OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[], QuadraticEquation *q)
 {
     char input[MAX_INPUT_SIZE] = {};
+    input[0] = '+';
     QuadraticEquation equation = {};
     if ((cli_flag->input_type == CODE_TEST)){
         return TestHandler();
@@ -79,11 +80,11 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[], QuadraticEquation *q)
     }
     for (unsigned i = 0; i < cli_flag->input_count; i++){
         if (cli_flag->file_flag){  
-            if(fgets(input, MAX_INPUT_SIZE, file) == NULL)
+            if(fgets(input+1, MAX_INPUT_SIZE, file) == NULL)
                 return FILE_ERROR;
         }else{
             printf(GREEN_ "Your input:" DEFAULT_COLOR);
-            if(fgets(input, MAX_INPUT_SIZE, stdin) == NULL)
+            if(fgets(input+1, MAX_INPUT_SIZE, stdin) == NULL)
                 return INCORRECT_PARAM;
         }
         OUTPUTS scan_out = coeffsScan(input, cli_flag, &equation); 
@@ -215,7 +216,7 @@ static void parseTest(unsigned cnt_tests, unsigned cnt_summand){
         }
         
         double parse_coeffs[3] = {};
-        if (parsCoeffs(input, parse_coeffs)){
+        if (parseCoeffs(input, parse_coeffs)){
                 printf(RED_ "Wrong generate" DEFAULT_COLOR);
         }
         if (!(isZero(generat_coeffs[2] - parse_coeffs[2]) && isZero(generat_coeffs[1] - parse_coeffs[1]) && isZero(generat_coeffs[0] - parse_coeffs[0]))){
@@ -242,7 +243,7 @@ static OUTPUTS coeffsScan(char *input, CLI_FLAG *cli_flag, QuadraticEquation *eq
 {
     if (cli_flag->input_type == SEP_INPUT){
         // printf("%s", input);
-            if (sscanf(input, "%lf%*[ ]%lf%*[ ]%lf %s", &(equation->a), &(equation->b), &(equation->c), input) != 3){
+            if (sscanf(input+1, "%lf%*[ ]%lf%*[ ]%lf %s", &(equation->a), &(equation->b), &(equation->c), input) != 3){
             return INCORRECT_PARAM;
             if (input[0] != '\0')
             return INCORRECT_PARAM;
@@ -250,7 +251,7 @@ static OUTPUTS coeffsScan(char *input, CLI_FLAG *cli_flag, QuadraticEquation *eq
         checkQuadraticEquation(equation);
     }else{
         double x_coeffs[3] = {0};
-        if (parsCoeffs(input, x_coeffs)){
+        if (parseCoeffs(input, x_coeffs)){
             return INCORRECT_PARAM;
         }
         printf("Result coefs: %lg %lg %lg\n", x_coeffs[2], x_coeffs[1], x_coeffs[0]);
