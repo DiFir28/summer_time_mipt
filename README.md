@@ -8,6 +8,7 @@ This is code writed by *FID* on *[MIPT](https://eng.mipt.ru/) summer school* to 
 * **Parse and bring** the quadratic equation to standart form
 * Colorful console output
 * Support **unitest**
+* Doxygen
 ## How to use
 #### Supported comand line flags
 * `--hand` to input coefficents separatly
