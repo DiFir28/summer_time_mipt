@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
             visualInit();
             visualLoop(&Q);
             CloseWindow();
-            printRoots(&Q);
         }
         errorHandler(code_output);
         return code_output;

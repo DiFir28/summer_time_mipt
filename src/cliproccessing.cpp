@@ -59,13 +59,13 @@ static void CountArgHandler(CLI_FLAG *output, int *iter, int argc, char *argv[])
 // static void (*Handlers[7])(CLI_FLAG*, int*, int, char**) = {&FileArgHandler, &SepArgHandler, &HelpArgHandler, &ParsArgHandler, &TestArgHandler, &VisArgHandler, &CountArgHandler};
 
 CLI_FLAG_HANDLER CLI_ARGS[] = {
-    {"--file", &FileArgHandler},
-    {"--hand", &SepArgHandler},
-    {"--help", &HelpArgHandler},
-    {"--pars", &ParsArgHandler},
-    {"--test", &TestArgHandler},
-    {"--vis",  &VisArgHandler},
-    {"-c",     &CountArgHandler}
+    {"--file", FileArgHandler},
+    {"--hand", SepArgHandler},
+    {"--help", HelpArgHandler},
+    {"--pars", ParsArgHandler},
+    {"--test", TestArgHandler},
+    {"--vis",  VisArgHandler},
+    {"-c",     CountArgHandler}
 };
 
 /**

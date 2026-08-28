@@ -14,7 +14,7 @@
 #define parseCoeffs(str, arr) parseCoeffsSys(str, arr, sizeof(arr))
 
 /**
- * @brief main parse function //! Needs to fix
+ * @brief main parse function
  * @param[in] input     string for parse
  * @param[out] x_coeffs output array for 3 coefficents
  * @return completed flag

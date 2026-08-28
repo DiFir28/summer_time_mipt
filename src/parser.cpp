@@ -6,20 +6,21 @@
 #include <math.h>
 #include <ctype.h>
 
-#include "returns.h"
 #include "colors.h"
 #include "quade.h"
 
 const unsigned coefficents_count = 3;
 static const char *signs = "+-*/^=";
+static const bool CORRECT = false;
+static const bool INCORRECT = true;
 
 bool parseCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsigned size)
 {
     if (size / sizeof(double) < coefficents_count){ // constant
-        return true;
+        return INCORRECT;
     }
     if (trashCleaner(input))
-        return true;
+        return INCORRECT;
         // printf(RED "INVALID INPUT\n" DEFAULT_COLOR);
     // printf("%s\n", input);
   
@@ -28,10 +29,10 @@ bool parseCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsig
     int current_x_power = 0;
     const char *sign_ptr = nearestSign(input);
     const char *prev_sign_ptr = input;
-    bool sign = true; // true - plus false - minus ;
+    bool sign = INCORRECT; // true - plus false - minus ;
     while (prev_sign_ptr != NULL){
         if (sign_ptr != NULL && *prev_sign_ptr == '^' && *sign_ptr == '^'){
-            return true;
+            return INCORRECT;
         }
         if (*prev_sign_ptr == '='){
             eqals_cnt+=1;
@@ -41,9 +42,15 @@ bool parseCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsig
             }
         }       
         if (sign_ptr != NULL && sign_ptr <= prev_sign_ptr + 1){
-            if (*sign_ptr == '-'){
+            if (*prev_sign_ptr == '*' || *prev_sign_ptr == '/' || *prev_sign_ptr == '^' )
+            {
+                return INCORRECT;
+            }
+            if (*sign_ptr == '-')
+            {
                 sign = false;
-            }else{
+            }
+            else{
                 sign = true;  
             }
             prev_sign_ptr = sign_ptr;
@@ -54,23 +61,26 @@ bool parseCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsig
         if (*(prev_sign_ptr + 1) == 'x' )
         {            
             current_x_power += 1;
-        }else{   
+        }
+        else{   
             if (parseNumber(prev_sign_ptr, &current_number_multiply, &current_x_power))
-                return true;
+                return INCORRECT;
         }
         if (parseSign(sign_ptr, eqals_cnt, &sign, x_coeffs, &current_number_multiply, &current_x_power))
-            return true;
+            return INCORRECT;
 
         prev_sign_ptr = sign_ptr;
-        if (sign_ptr != NULL && prev_sign_ptr != NULL){
+        if (sign_ptr != NULL && prev_sign_ptr != NULL)
+        {
             sign_ptr = nearestSign(sign_ptr+1);        
-            if (sign_ptr - prev_sign_ptr == 0){
+            if (sign_ptr - prev_sign_ptr == 0)
+            {
                 // printf(RED "2 sign in a row" DEFAULT_COLOR);
-                return true;
+                return INCORRECT;
             }
         }
     }
-    return false;
+    return CORRECT;
 }
 
 bool parseNumber(const char *prev_sign_ptr, double *current_number_multiply, int *current_x_power)
@@ -80,7 +90,7 @@ bool parseNumber(const char *prev_sign_ptr, double *current_number_multiply, int
     double current_number = strtod(prev_sign_ptr + 1, &current_number_end);
     if (current_number == 0 && *(prev_sign_ptr + 1) != '0'){
         // printf(RED "somthing went wrong on %c\n" DEFAULT_COLOR, *prev_sign_ptr);
-        return true;
+        return INCORRECT;
     }
     if (*prev_sign_ptr == '*' || *prev_sign_ptr == '+' || *prev_sign_ptr == '-' || *prev_sign_ptr == '='){
         (*current_number_multiply) *= current_number;
@@ -101,16 +111,17 @@ bool parseNumber(const char *prev_sign_ptr, double *current_number_multiply, int
     if (*current_number_end == 'x'){
         (*current_x_power) +=1;
     }
-    return false;
+    return CORRECT;
 }
 
 bool parseSign(const char *sign_ptr, int eqals_cnt, bool *sign, double x_coeffs[], double *current_number_multiply, int *current_x_power)
 {
     // static  bool sign = true; // true - plus false - minus ;
-    if (sign_ptr == NULL || *sign_ptr == '+' || *sign_ptr == '-' || *sign_ptr == '='){
+    if (sign_ptr == NULL || *sign_ptr == '+' || *sign_ptr == '-' || *sign_ptr == '=')
+    {
         if (*current_x_power > 2 || *current_x_power < 0){
             // printf(RED "WRONG POWER" DEFAULT_COLOR);
-            return true;
+            return INCORRECT;
         }
 
         if (*sign^(eqals_cnt)){
@@ -120,16 +131,18 @@ bool parseSign(const char *sign_ptr, int eqals_cnt, bool *sign, double x_coeffs[
             x_coeffs[*current_x_power] -= *current_number_multiply;
         }            
         // printf(YELLOW "power %d number %lg| " DEFAULT_COLOR, current_x_power, current_number_multiply);
-        if (sign_ptr != NULL && (*sign_ptr == '+' || *sign_ptr == '=')){
+        if (sign_ptr != NULL && (*sign_ptr == '+' || *sign_ptr == '='))
+        {
             *sign = true;
         }
-        else if (sign_ptr != NULL){
+        else if (sign_ptr != NULL)
+        {
             *sign = false;
         }
         *current_x_power = 0;
         *current_number_multiply = 1;
     }
-    return false;
+    return CORRECT;
 }
 
 bool trashCleaner(char *input)
@@ -141,28 +154,33 @@ bool trashCleaner(char *input)
             continue;
         }          
         if (strchr(validChr, input[I]) == NULL){
-            return true;
+            return INCORRECT;
         }
+        input[J] = input[I];
+        J++;
+    }
+    J = 0;
+    for(unsigned I = 0, n =  unsigned(strlen(input)); I < n; I++){
         if (input[I] == '*' && input[J-1] == '*'){
             if (input[I+1] == 'x'){
-                return true;
+                return INCORRECT;
             }
             input[J-1] = '^';
             continue;
         }
-        if (input[I] == '^' || input[I] == '/'){
+        if (input[I] == '^' || input[I] == '/' || input[I] == 'x'){
             if (input[I+1] == 'x'){
-                return true;
+                return INCORRECT;
             }
         }
         if (input[I] == 'x' && isdigit(input[I+1])){
-                return true;
+                return INCORRECT;
         }
         input[J] = input[I];
         J++;
     }
     input[J] = '\0';
-    return false;
+    return CORRECT;
 }
 
 const char *nearestSign(const char *input){

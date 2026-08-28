@@ -100,9 +100,7 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[], QuadraticEquation *q)
         fclose(file);
     }
     return CORRECT;
-
 }
-
 
 /**
  * @brief complite 8 prepared tests
@@ -170,7 +168,6 @@ static void randTestHandler(const unsigned cnt_tests){
  * @param[in] cnt_summand   max number of summand that will be generated
  */
 static void parseTest(unsigned cnt_tests, unsigned cnt_summand){
-    //TODO: Add corner case "-x^2 = -1"
     cnt_summand--;
     unsigned pass_cnt = 0;
     srand(time(NULL));
