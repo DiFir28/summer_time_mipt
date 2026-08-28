@@ -1,0 +1,89 @@
+\doxysection{include/handlers.h File Reference}
+\hypertarget{handlers_8h}{}\label{handlers_8h}\index{include/handlers.h@{include/handlers.h}}
+
+
+handlers based on CLI arguments  
+
+
+{\ttfamily \#include "{}returns.\+h"{}}\newline
+{\ttfamily \#include "{}cliprocessing.\+h"{}}\newline
+{\ttfamily \#include "{}quade.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} \mbox{\hyperlink{handlers_8h_a276b8b6c76d8f4091fd043221a20a34b}{main\+Handler}} (\mbox{\hyperlink{struct_c_l_i___f_l_a_g}{CLI\+\_\+\+FLAG}} \texorpdfstring{$\ast$}{*}cli\+\_\+flag)
+\begin{DoxyCompactList}\small\item\em handle CLI arguments \end{DoxyCompactList}\item 
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} \mbox{\hyperlink{handlers_8h_abc7519cdefe0751c4d5d5ec3f210d930}{code\+Handler}} (\mbox{\hyperlink{struct_c_l_i___f_l_a_g}{CLI\+\_\+\+FLAG}} \texorpdfstring{$\ast$}{*}cli\+\_\+flag, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{struct_quadratic_equation}{Quadratic\+Equation}} \texorpdfstring{$\ast$}{*}q)
+\begin{DoxyCompactList}\small\item\em run code based on CLI arguments \end{DoxyCompactList}\item 
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} \mbox{\hyperlink{handlers_8h_ab28564e5436d99f09eb2b8d2dbfc8eee}{Test\+Handler}} ()
+\begin{DoxyCompactList}\small\item\em run unitets based on CLI arguments \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+handlers based on CLI arguments 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{handlers_8h_abc7519cdefe0751c4d5d5ec3f210d930}\index{handlers.h@{handlers.h}!codeHandler@{codeHandler}}
+\index{codeHandler@{codeHandler}!handlers.h@{handlers.h}}
+\doxysubsubsection{\texorpdfstring{codeHandler()}{codeHandler()}}
+{\footnotesize\ttfamily \label{handlers_8h_abc7519cdefe0751c4d5d5ec3f210d930} 
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} code\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_c_l_i___f_l_a_g}{CLI\+\_\+\+FLAG}} \texorpdfstring{$\ast$}{*}}]{cli\+\_\+flag}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\mbox{[}$\,$\mbox{]}, }\item[{\mbox{\hyperlink{struct_quadratic_equation}{Quadratic\+Equation}} \texorpdfstring{$\ast$}{*}}]{q}{}\end{DoxyParamCaption})}
+
+
+
+run code based on CLI arguments 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em cli\+\_\+flag} & parsed CLI arguments \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & CLI arguments \\
+\hline
+\mbox{\texttt{ out}}  & {\em q} & quadratic eqation for visual \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxylink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS} 
+\end{DoxySeeAlso}
+\Hypertarget{handlers_8h_a276b8b6c76d8f4091fd043221a20a34b}\index{handlers.h@{handlers.h}!mainHandler@{mainHandler}}
+\index{mainHandler@{mainHandler}!handlers.h@{handlers.h}}
+\doxysubsubsection{\texorpdfstring{mainHandler()}{mainHandler()}}
+{\footnotesize\ttfamily \label{handlers_8h_a276b8b6c76d8f4091fd043221a20a34b} 
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} main\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_c_l_i___f_l_a_g}{CLI\+\_\+\+FLAG}} \texorpdfstring{$\ast$}{*}}]{cli\+\_\+flag}{}\end{DoxyParamCaption})}
+
+
+
+handle CLI arguments 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em cli\+\_\+flag} & parsed CLI arguments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxylink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS} 
+\end{DoxySeeAlso}
+\Hypertarget{handlers_8h_ab28564e5436d99f09eb2b8d2dbfc8eee}\index{handlers.h@{handlers.h}!TestHandler@{TestHandler}}
+\index{TestHandler@{TestHandler}!handlers.h@{handlers.h}}
+\doxysubsubsection{\texorpdfstring{TestHandler()}{TestHandler()}}
+{\footnotesize\ttfamily \label{handlers_8h_ab28564e5436d99f09eb2b8d2dbfc8eee} 
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} Test\+Handler (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+run unitets based on CLI arguments 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxylink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS} 
+\end{DoxySeeAlso}

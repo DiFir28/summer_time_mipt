@@ -1,0 +1,92 @@
+\doxysection{include/returns.h File Reference}
+\hypertarget{returns_8h}{}\label{returns_8h}\index{include/returns.h@{include/returns.h}}
+
+
+processing code outputs  
+
+
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} \{ \newline
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36ab58a0b1d4be8cd01c0e89e899a888e35}{CORRECT}} = 0
+, \mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36ad66307904197c78f2dcf71767b18b56c}{MAIN\+\_\+\+CODE}} = 1
+, \mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a3d683f58af13024fc8919fd2c35b76be}{INCORRECT\+\_\+\+PARAM}} = 2
+, \mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a280d2ae233303b3d894900b782e87a1d}{INCORRECT\+\_\+\+X\+\_\+\+POWER}} = 3
+, \newline
+\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a452756e9e2581797c12ff67bab8e8bd4}{FILE\+\_\+\+ERROR}} = 4
+, \mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a2bb6b99f2c5e8182e6d55baf8b3c9c64}{FEW\+\_\+\+SIGNS\+\_\+\+IN\+\_\+\+ROW}} = 5
+, \mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36abb914706d868b3e3c6cecdbcebfb9a72}{UNKNOWN\+\_\+\+CLI\+\_\+\+FLAGS}} = 6
+ \}
+\begin{DoxyCompactList}\small\item\em enum of possible code outputs \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{returns_8h_ad386213562306c29911b5e5753e55db1}{error\+Handler}} (\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}} output)
+\begin{DoxyCompactList}\small\item\em processing possible errors \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+processing code outputs 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}\index{returns.h@{returns.h}!OUTPUTS@{OUTPUTS}}
+\index{OUTPUTS@{OUTPUTS}!returns.h@{returns.h}}
+\doxysubsubsection{\texorpdfstring{OUTPUTS}{OUTPUTS}}
+{\footnotesize\ttfamily \label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36} 
+enum \mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}}}
+
+
+
+enum of possible code outputs 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CORRECT@{CORRECT}!returns.h@{returns.h}}\index{returns.h@{returns.h}!CORRECT@{CORRECT}}}\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36ab58a0b1d4be8cd01c0e89e899a888e35}\label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36ab58a0b1d4be8cd01c0e89e899a888e35} 
+CORRECT&No errors \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MAIN\_CODE@{MAIN\_CODE}!returns.h@{returns.h}}\index{returns.h@{returns.h}!MAIN\_CODE@{MAIN\_CODE}}}\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36ad66307904197c78f2dcf71767b18b56c}\label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36ad66307904197c78f2dcf71767b18b56c} 
+MAIN\+\_\+\+CODE&No errors on Input, start main code \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INCORRECT\_PARAM@{INCORRECT\_PARAM}!returns.h@{returns.h}}\index{returns.h@{returns.h}!INCORRECT\_PARAM@{INCORRECT\_PARAM}}}\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a3d683f58af13024fc8919fd2c35b76be}\label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a3d683f58af13024fc8919fd2c35b76be} 
+INCORRECT\+\_\+\+PARAM&Incorrect param errors \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INCORRECT\_X\_POWER@{INCORRECT\_X\_POWER}!returns.h@{returns.h}}\index{returns.h@{returns.h}!INCORRECT\_X\_POWER@{INCORRECT\_X\_POWER}}}\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a280d2ae233303b3d894900b782e87a1d}\label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a280d2ae233303b3d894900b782e87a1d} 
+INCORRECT\+\_\+\+X\+\_\+\+POWER&Incorrect X power in equation \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FILE\_ERROR@{FILE\_ERROR}!returns.h@{returns.h}}\index{returns.h@{returns.h}!FILE\_ERROR@{FILE\_ERROR}}}\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a452756e9e2581797c12ff67bab8e8bd4}\label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a452756e9e2581797c12ff67bab8e8bd4} 
+FILE\+\_\+\+ERROR&File error \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FEW\_SIGNS\_IN\_ROW@{FEW\_SIGNS\_IN\_ROW}!returns.h@{returns.h}}\index{returns.h@{returns.h}!FEW\_SIGNS\_IN\_ROW@{FEW\_SIGNS\_IN\_ROW}}}\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a2bb6b99f2c5e8182e6d55baf8b3c9c64}\label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36a2bb6b99f2c5e8182e6d55baf8b3c9c64} 
+FEW\+\_\+\+SIGNS\+\_\+\+IN\+\_\+\+ROW&Incorrect input\+: few signs in a row \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNKNOWN\_CLI\_FLAGS@{UNKNOWN\_CLI\_FLAGS}!returns.h@{returns.h}}\index{returns.h@{returns.h}!UNKNOWN\_CLI\_FLAGS@{UNKNOWN\_CLI\_FLAGS}}}\Hypertarget{returns_8h_aa19ec9afac275fcd5838ee7e19820a36abb914706d868b3e3c6cecdbcebfb9a72}\label{returns_8h_aa19ec9afac275fcd5838ee7e19820a36abb914706d868b3e3c6cecdbcebfb9a72} 
+UNKNOWN\+\_\+\+CLI\+\_\+\+FLAGS&Incorrect CLI input \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{returns_8h_ad386213562306c29911b5e5753e55db1}\index{returns.h@{returns.h}!errorHandler@{errorHandler}}
+\index{errorHandler@{errorHandler}!returns.h@{returns.h}}
+\doxysubsubsection{\texorpdfstring{errorHandler()}{errorHandler()}}
+{\footnotesize\ttfamily \label{returns_8h_ad386213562306c29911b5e5753e55db1} 
+void error\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{returns_8h_aa19ec9afac275fcd5838ee7e19820a36}{OUTPUTS}}}]{output}{}\end{DoxyParamCaption})}
+
+
+
+processing possible errors 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em output} & output for processing \\
+\hline
+\end{DoxyParams}

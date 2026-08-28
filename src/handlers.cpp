@@ -78,7 +78,8 @@ OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[], QuadraticEquation *q)
             return FILE_ERROR;
         }
     }
-    for (unsigned i = 0; i < cli_flag->input_count; i++){
+    for (unsigned i = 0; i < cli_flag->input_count; i++)
+    {
         if (cli_flag->file_flag){  
             if(fgets(input+1, MAX_INPUT_SIZE, file) == NULL)
                 return FILE_ERROR;
@@ -118,14 +119,16 @@ static void preparedTestsHandler(){
 
     QuadraticEquation equation = {};
     unsigned passed_cnt =0;
-    for (unsigned int i = 0, n = (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])); i < n; i++){
+    for (unsigned int i = 0, n = (sizeof(hand_input_tests)/sizeof(hand_input_tests[0])); i < n; i++)
+    {
         equation = {};
         equation.a = hand_input_tests[i].a;
         equation.b = hand_input_tests[i].b;
         equation.c = hand_input_tests[i].c;
         checkQuadraticEquation(&equation);
         solveQuadraticEquation(&equation);
-        if (equation.roots_count == hand_input_tests[i].roots_count){
+        if (equation.roots_count == hand_input_tests[i].roots_count)
+        {
             if ((isZero(hand_input_tests[i].root1 - equation.root1) && isZero(hand_input_tests[i].root2 - equation.root2)) 
             || (isZero(hand_input_tests[i].root1 - equation.root2) && isZero(hand_input_tests[i].root2 - equation.root1))){
                 passed_cnt++;
@@ -149,8 +152,8 @@ static void randTestHandler(const unsigned cnt_tests){
     QuadraticEquation equation = {};
     srand(time(NULL));
     unsigned passed_rand_cnt = 0;
-    for (unsigned i = 0; i < cnt_tests; i++){
-        
+    for (unsigned i = 0; i < cnt_tests; i++)
+    {        
         checkQuadraticEquation(&equation);
         solveQuadraticEquation(&equation);
         if (!checkQuadraticEquationRoots(&equation)){
@@ -171,7 +174,8 @@ static void parseTest(unsigned cnt_tests, unsigned cnt_summand){
     cnt_summand--;
     unsigned pass_cnt = 0;
     srand(time(NULL));
-    for (unsigned j = 0; j < cnt_tests; j++){
+    for (unsigned j = 0; j < cnt_tests; j++)
+    {
         char input[MAX_INPUT_SIZE] = {0};
         double generat_coeffs[3] = {};
         int Ind = 0;
@@ -185,8 +189,7 @@ static void parseTest(unsigned cnt_tests, unsigned cnt_summand){
                 input[Ind] = '-';
             }
             Ind++;
-            Ind+= sprintf(input+Ind, "%.3f", cur_coeff);
-            
+            Ind+= sprintf(input+Ind, "%.3f", cur_coeff);            
             unsigned x_pow = rand()%3;
             if (rand()%2 && x_pow != 0){
                 input[Ind++] = '*';
@@ -204,14 +207,12 @@ static void parseTest(unsigned cnt_tests, unsigned cnt_summand){
                 input[Ind] = 'x';
                 Ind+=1;
             }
-
             if (sign){
                 generat_coeffs[x_pow] += cur_coeff;
             }else{
                 generat_coeffs[x_pow] -= cur_coeff;
             }
-        }
-        
+        }        
         double parse_coeffs[3] = {};
         if (parseCoeffs(input, parse_coeffs)){
                 printf(RED_ "Wrong generate" DEFAULT_COLOR);

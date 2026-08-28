@@ -11,7 +11,8 @@
 
 void checkLinkSys(QuadraticEquation *q, const char* file, unsigned line)
 {
-    if ((q==NULL)){
+    if ((q==NULL))
+    {
         printf(RED_ "Incorrect Link, file %s line %d.\n" DEFAULT_COLOR, file, line);
         abort();
     }
@@ -20,7 +21,8 @@ void checkLinkSys(QuadraticEquation *q, const char* file, unsigned line)
 void checkQuadraticEquationSys(QuadraticEquation *q, const char* file, unsigned line)
 {
     checkLink(q);
-    if (!(isfinite(q->a) && isfinite(q->b) && isfinite(q->c))){
+    if (!(isfinite(q->a) && isfinite(q->b) && isfinite(q->c)))
+    {
         printf(RED_ "Incorrect coefficients, file %s line %d.\n" DEFAULT_COLOR, file, line);
         abort();
     }
@@ -39,7 +41,8 @@ double calcDiscriminant(QuadraticEquation *q)
 static void solveAsLinearEquation(QuadraticEquation *q)
 {
     checkLink(q);
-    if (isZero(q->b)){
+    if (isZero(q->b))
+    {
         if (isZero(q->c)){
             q->roots_count = ROOTS_INF;
         }

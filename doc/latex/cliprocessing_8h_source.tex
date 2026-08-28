@@ -1,0 +1,43 @@
+\doxysection{cliprocessing.\+h}
+\hypertarget{cliprocessing_8h_source}{}\label{cliprocessing_8h_source}\index{include/cliprocessing.h@{include/cliprocessing.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_CLI\_PROC\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_CLI\_PROC\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00013\ \ \ \ \ CLI\_INFO\ =\ 0,\ }
+\DoxyCodeLine{00014\ \ \ \ \ CLI\_HELP\ =\ 1,\ }
+\DoxyCodeLine{00015\ \ \ \ \ CLI\_CODE\ =\ 2,\ }
+\DoxyCodeLine{00016\ \ \ \ \ CLI\_ERROR\ =\ 3\ }
+\DoxyCodeLine{00017\ \}CLI\_MAIN\_FLAG;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00023\ \ \ \ \ SEP\_INPUT\ =\ 0,\ \ \textcolor{comment}{//TODO\ rename}}
+\DoxyCodeLine{00024\ \ \ \ \ PARS\_INPUT\ =\ 1,\ }
+\DoxyCodeLine{00025\ \ \ \ \ CODE\_TEST\ =\ 2\ \ }
+\DoxyCodeLine{00026\ \}CLI\_INPUT\_TYPE\_FLAG;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_c_l_i___f_l_a_g}{CLI\_FLAG}}\{}
+\DoxyCodeLine{00032\ \ \ \ \ CLI\_MAIN\_FLAG\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g_a8639f781a83acb811f283f33417623af}{main\_flag}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ CLI\_INPUT\_TYPE\_FLAG\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g_a5daaa8fd464212f3ff67bcd31b51fba2}{input\_type}};\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g_ac73cb161ea348ce4670a815cb926d3fe}{input\_count}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ short\ special\_flag;\ }}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g_a12fbd915a00d340285e259eaef13c7f7}{file\_name\_index}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g_a0828d5c583ba635d9d154347406b4cb8}{input\_type\_flag}}\ :\ 1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g_a42f64f3b71d1b43aaa1a13670bd947fe}{file\_flag}}\ :\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g_acd0fc2ea78fdd269440203dc5b971e9d}{visual\_flag}}\ :\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//\ bool\ shoort\_output\_flag\ :\ 1;\ \ }}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_c_l_i___f_l_a_g___h_a_n_d_l_e_r}{CLI\_FLAG\_HANDLER}}\{}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ flag;}
+\DoxyCodeLine{00048\ \ \ \ \ void\ (*handler)(\mbox{\hyperlink{struct_c_l_i___f_l_a_g}{CLI\_FLAG}}*,\ \textcolor{keywordtype}{int}*,\ int,\ \textcolor{keywordtype}{char}**);}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00057\ \mbox{\hyperlink{struct_c_l_i___f_l_a_g}{CLI\_FLAG}}\ getCliFlags(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[]);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

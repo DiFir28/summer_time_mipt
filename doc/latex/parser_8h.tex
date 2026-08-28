@@ -1,0 +1,192 @@
+\doxysection{include/parser.h File Reference}
+\hypertarget{parser_8h}{}\label{parser_8h}\index{include/parser.h@{include/parser.h}}
+
+
+function for extract coefficents fron standert writed eqation, support signs\+: +, -\/, \texorpdfstring{$\ast$}{*}, /, \texorpdfstring{$^\wedge$}{\string^}  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{parser_8h_af85c4031eea04bf0beb271ab531ee7ca}{parse\+Coeffs}}(str,  arr)
+\begin{DoxyCompactList}\small\item\em macros add size of input arr \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{parser_8h_a3bd2bbce4e3ae6b45057e4de743a30d9}{parse\+Coeffs\+Sys}} (char \texorpdfstring{$\ast$}{*}input, double x\+\_\+coeffs\mbox{[}$\,$\mbox{]}, unsigned size)
+\begin{DoxyCompactList}\small\item\em main parse function \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{parser_8h_aad118705d1242a4afe1d30a18b8876f4}{parse\+Number}} (const char \texorpdfstring{$\ast$}{*}prev\+\_\+sign\+\_\+ptr, double \texorpdfstring{$\ast$}{*}current\+\_\+number\+\_\+multiply, int \texorpdfstring{$\ast$}{*}current\+\_\+x\+\_\+power)
+\begin{DoxyCompactList}\small\item\em function parse number in multiply \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{parser_8h_a5bba07c2548f8b02c2c84a38c2c1bc98}{parse\+Sign}} (const char \texorpdfstring{$\ast$}{*}sign\+\_\+ptr, int eqals\+\_\+cnt, bool \texorpdfstring{$\ast$}{*}sign, double x\+\_\+coeffs\mbox{[}$\,$\mbox{]}, double \texorpdfstring{$\ast$}{*}current\+\_\+number\+\_\+multiply, int \texorpdfstring{$\ast$}{*}current\+\_\+x\+\_\+power)
+\begin{DoxyCompactList}\small\item\em function parse signs at the end of summand \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{parser_8h_a77c0e548fd05e748cb24f80d9ea2db09}{trash\+Cleaner}} (char \texorpdfstring{$\ast$}{*}input)
+\begin{DoxyCompactList}\small\item\em clear from useless space and precheck of correct chars in input \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{parser_8h_ac406ccc2f6c052f5d1b43d67e2f6d551}{nearest\+Sign}} (const char \texorpdfstring{$\ast$}{*}const input)
+\begin{DoxyCompactList}\small\item\em return pointer to nearest sign (only forward direction) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+function for extract coefficents fron standert writed eqation, support signs\+: +, -\/, \texorpdfstring{$\ast$}{*}, /, \texorpdfstring{$^\wedge$}{\string^} 
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{parser_8h_af85c4031eea04bf0beb271ab531ee7ca}\index{parser.h@{parser.h}!parseCoeffs@{parseCoeffs}}
+\index{parseCoeffs@{parseCoeffs}!parser.h@{parser.h}}
+\doxysubsubsection{\texorpdfstring{parseCoeffs}{parseCoeffs}}
+{\footnotesize\ttfamily \label{parser_8h_af85c4031eea04bf0beb271ab531ee7ca} 
+\#define parse\+Coeffs(\begin{DoxyParamCaption}\item[{}]{str}{, }\item[{}]{arr}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{parseCoeffsSys(str,\ arr,\ \textcolor{keyword}{sizeof}(arr))}
+
+\end{DoxyCode}
+
+
+macros add size of input arr 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & string for parse \\
+\hline
+{\em arr} & output array for 3 coefficents \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{parser_8h_ac406ccc2f6c052f5d1b43d67e2f6d551}\index{parser.h@{parser.h}!nearestSign@{nearestSign}}
+\index{nearestSign@{nearestSign}!parser.h@{parser.h}}
+\doxysubsubsection{\texorpdfstring{nearestSign()}{nearestSign()}}
+{\footnotesize\ttfamily \label{parser_8h_ac406ccc2f6c052f5d1b43d67e2f6d551} 
+const char \texorpdfstring{$\ast$}{*} nearest\+Sign (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}const}]{input}{}\end{DoxyParamCaption})}
+
+
+
+return pointer to nearest sign (only forward direction) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & string for search nearest sign \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+sign\+\_\+ptr pointer on sign 
+\end{DoxyReturn}
+\Hypertarget{parser_8h_a3bd2bbce4e3ae6b45057e4de743a30d9}\index{parser.h@{parser.h}!parseCoeffsSys@{parseCoeffsSys}}
+\index{parseCoeffsSys@{parseCoeffsSys}!parser.h@{parser.h}}
+\doxysubsubsection{\texorpdfstring{parseCoeffsSys()}{parseCoeffsSys()}}
+{\footnotesize\ttfamily \label{parser_8h_a3bd2bbce4e3ae6b45057e4de743a30d9} 
+bool parse\+Coeffs\+Sys (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{double}]{x\+\_\+coeffs}{\mbox{[}$\,$\mbox{]}, }\item[{unsigned}]{size}{}\end{DoxyParamCaption})}
+
+
+
+main parse function 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & string for parse \\
+\hline
+\mbox{\texttt{ out}}  & {\em x\+\_\+coeffs} & output array for 3 coefficents \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+completed flag 
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em true} & error\+: incorrect input eqation \\
+\hline
+{\em false} & no error \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{parser_8h_aad118705d1242a4afe1d30a18b8876f4}\index{parser.h@{parser.h}!parseNumber@{parseNumber}}
+\index{parseNumber@{parseNumber}!parser.h@{parser.h}}
+\doxysubsubsection{\texorpdfstring{parseNumber()}{parseNumber()}}
+{\footnotesize\ttfamily \label{parser_8h_aad118705d1242a4afe1d30a18b8876f4} 
+bool parse\+Number (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prev\+\_\+sign\+\_\+ptr}{, }\item[{double \texorpdfstring{$\ast$}{*}}]{current\+\_\+number\+\_\+multiply}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{current\+\_\+x\+\_\+power}{}\end{DoxyParamCaption})}
+
+
+
+function parse number in multiply 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em prev\+\_\+sign\+\_\+ptr} & pointer to previous sign \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em current\+\_\+number\+\_\+multiply} & value of current multiply \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em current\+\_\+x\+\_\+power} & power of X in current multiply \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+completed flag 
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em true} & error\+: incorrect input eqation \\
+\hline
+{\em false} & no error \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{parser_8h_a5bba07c2548f8b02c2c84a38c2c1bc98}\index{parser.h@{parser.h}!parseSign@{parseSign}}
+\index{parseSign@{parseSign}!parser.h@{parser.h}}
+\doxysubsubsection{\texorpdfstring{parseSign()}{parseSign()}}
+{\footnotesize\ttfamily \label{parser_8h_a5bba07c2548f8b02c2c84a38c2c1bc98} 
+bool parse\+Sign (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{sign\+\_\+ptr}{, }\item[{int}]{eqals\+\_\+cnt}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{sign}{, }\item[{double}]{x\+\_\+coeffs}{\mbox{[}$\,$\mbox{]}, }\item[{double \texorpdfstring{$\ast$}{*}}]{current\+\_\+number\+\_\+multiply}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{current\+\_\+x\+\_\+power}{}\end{DoxyParamCaption})}
+
+
+
+function parse signs at the end of summand 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sign\+\_\+ptr} & pointer to last sign of summand \\
+\hline
+\mbox{\texttt{ in}}  & {\em eqals\+\_\+cnt} & count of equals signs for control sign(+ or -\/) in coefficents \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em sign} & current sign \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em x\+\_\+coeffs} & array for 3 coefficents (coeffs changed affter end of summand) \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em current\+\_\+number\+\_\+multiply} & value of current multiply (equals zero after end of summand) \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em current\+\_\+x\+\_\+power} & power of X in current summand (equals zero after end of summand) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+completed flag 
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em true} & error\+: incorrect input eqation \\
+\hline
+{\em false} & no error \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{parser_8h_a77c0e548fd05e748cb24f80d9ea2db09}\index{parser.h@{parser.h}!trashCleaner@{trashCleaner}}
+\index{trashCleaner@{trashCleaner}!parser.h@{parser.h}}
+\doxysubsubsection{\texorpdfstring{trashCleaner()}{trashCleaner()}}
+{\footnotesize\ttfamily \label{parser_8h_a77c0e548fd05e748cb24f80d9ea2db09} 
+bool trash\+Cleaner (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{input}{}\end{DoxyParamCaption})}
+
+
+
+clear from useless space and precheck of correct chars in input 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em input} & string for cleaning \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+completed flag 
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em true} & error\+: incorrect input eqation \\
+\hline
+{\em false} & no error \\
+\hline
+\end{DoxyRetVals}

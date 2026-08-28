@@ -86,6 +86,7 @@ bool parseCoeffsSys(char *input, double x_coeffs[/* index ~ power of x*/], unsig
 bool parseNumber(const char *prev_sign_ptr, double *current_number_multiply, int *current_x_power)
 {
     static double prev_number = 0;
+    static bool division_flag = false;
     char *current_number_end = NULL;
     double current_number = strtod(prev_sign_ptr + 1, &current_number_end);
     if (current_number == 0 && *(prev_sign_ptr + 1) != '0'){
@@ -94,17 +95,22 @@ bool parseNumber(const char *prev_sign_ptr, double *current_number_multiply, int
     }
     if (*prev_sign_ptr == '*' || *prev_sign_ptr == '+' || *prev_sign_ptr == '-' || *prev_sign_ptr == '='){
         (*current_number_multiply) *= current_number;
+        division_flag = false;
     }
     else if (*prev_sign_ptr == '/'){
         (*current_number_multiply) /= current_number;
+        division_flag = true;
     }
     else if (*prev_sign_ptr == '^'){
         if (*(prev_sign_ptr-1) == 'x'){            
             (*current_x_power) += unsigned(current_number - 1);
         }
-        else{            
-            (*current_number_multiply) *= pow(prev_number, current_number - 1);
-
+        else{
+            if (!division_flag){
+                (*current_number_multiply) *= pow(prev_number, current_number - 1);
+            }else{
+                (*current_number_multiply) /= pow(prev_number, current_number - 1);
+            }
         }
     }
     prev_number = current_number;
@@ -170,6 +176,9 @@ bool trashCleaner(char *input)
         }
         if (input[I] == '^' || input[I] == '/' || input[I] == 'x'){
             if (input[I+1] == 'x'){
+                return INCORRECT;
+            }
+            if (input[I] == '/' && input[I + 1] == '0'){
                 return INCORRECT;
             }
         }

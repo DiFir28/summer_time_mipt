@@ -1,0 +1,49 @@
+\doxysection{quade.\+h}
+\hypertarget{quade_8h_source}{}\label{quade_8h_source}\index{include/quade.h@{include/quade.h}}
+\mbox{\hyperlink{quade_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_QUADE\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_QUADE\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ EPSILON\ 1e-\/7}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ checkLink(x);\ checkLinkSys(x,\ \_\_FILE\_\_,\ \_\_LINE\_\_);}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ checkQuadraticEquation(x);\ checkQuadraticEquationSys(x,\ \_\_FILE\_\_,\ \_\_LINE\_\_);}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{quade_8h_a395c286e1d7d43ac24012ce4caddfa06ade3f1411779db0cc3602a297f4c40b2d}{ROOTS\_ZERO}}\ =\ 0,\ }
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{quade_8h_a395c286e1d7d43ac24012ce4caddfa06abdcc073c557c0852ed69d6274509c195}{ROOTS\_ONE}}\ =\ 1,\ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{quade_8h_a395c286e1d7d43ac24012ce4caddfa06a587a18cf763d96721205bea285dee78e}{ROOTS\_TWO}}\ =\ 2,\ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{quade_8h_a395c286e1d7d43ac24012ce4caddfa06ab964a43d4ee858e1d459626f9a0ea7c0}{ROOTS\_INF}}\ =\ -\/1\ \ }
+\DoxyCodeLine{00027\ \}\ \mbox{\hyperlink{quade_8h_a395c286e1d7d43ac24012ce4caddfa06}{ROOTSCOUNT}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{double}\ a,\ b,\ \mbox{\hyperlink{struct_quadratic_equation_a3ea57c6e9d39a8f4ee2b029db6a8e6d8}{c}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{double}\ root1,\ \mbox{\hyperlink{struct_quadratic_equation_a70ebe7b01d5ff37784714673e72ec8cd}{root2}};\ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{quade_8h_a395c286e1d7d43ac24012ce4caddfa06}{ROOTSCOUNT}}\ \mbox{\hyperlink{struct_quadratic_equation_a2780ae0c5235b08da657839e90a86fca}{roots\_count}};\ }
+\DoxyCodeLine{00037\ \}\ \mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{quade_8h_a7802d457b65f7d2a9acde7dfe94954c8}{isZero}}(\textcolor{keywordtype}{double}\ num);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{quade_8h_aa4df7536564deca10ca237229991732c}{checkLinkSys}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ file,\ \textcolor{keywordtype}{unsigned}\ line);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{quade_8h_a9005d6205bbbc54504b5f783c54b9cb8}{checkQuadraticEquationSys}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ file,\ \textcolor{keywordtype}{unsigned}\ line);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00069\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{quade_8h_a389802a5d3d49ff662be79d00bc2ec2e}{calcDiscriminant}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{quade_8h_a05958e2483e9353a7e1275d55eba192c}{solveQuadraticEquation}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{quade_8h_a73e53f889dbe127b2891ddfa7a96e404}{calcValQuadraticEquation}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q,\ \textcolor{keywordtype}{double}\ x);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{quade_8h_a6dc74ccc32ca93184fe50a5772ea851a}{printRoots}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00095\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{quade_8h_a1d16e2708d85a94dc4be035403f2c2d1}{checkQuadraticEquationRoots}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00101\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{quade_8h_a114d1e08636e67e9b58e1f818e7cf7c1}{randQuadraticEquation}}(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

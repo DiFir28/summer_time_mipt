@@ -1,0 +1,23 @@
+\doxysection{parser.\+h}
+\hypertarget{parser_8h_source}{}\label{parser_8h_source}\index{include/parser.h@{include/parser.h}}
+\mbox{\hyperlink{parser_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_PARSER\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_PARSER\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ parseCoeffs(str,\ arr)\ parseCoeffsSys(str,\ arr,\ sizeof(arr))}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00024\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{parser_8h_a3bd2bbce4e3ae6b45057e4de743a30d9}{parseCoeffsSys}}(\textcolor{keywordtype}{char}\ *input,\ \textcolor{keywordtype}{double}\ x\_coeffs[\textcolor{comment}{/*\ index\ \string~\ power\ of\ x*/}],\ \textcolor{keywordtype}{unsigned}\ size);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{parser_8h_aad118705d1242a4afe1d30a18b8876f4}{parseNumber}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prev\_sign\_ptr,\ \textcolor{keywordtype}{double}\ *current\_number\_multiply,\ \textcolor{keywordtype}{int}\ *current\_x\_power);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{parser_8h_a5bba07c2548f8b02c2c84a38c2c1bc98}{parseSign}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *sign\_ptr,\ \textcolor{keywordtype}{int}\ eqals\_cnt,\ \textcolor{keywordtype}{bool}\ *sign,\ \textcolor{keywordtype}{double}\ x\_coeffs[],\ \textcolor{keywordtype}{double}\ *current\_number\_multiply,\ \textcolor{keywordtype}{int}\ *current\_x\_power);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00058\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{parser_8h_a77c0e548fd05e748cb24f80d9ea2db09}{trashCleaner}}(\textcolor{keywordtype}{char}\ *input);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{parser_8h_ac406ccc2f6c052f5d1b43d67e2f6d551}{nearestSign}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ \textcolor{keyword}{const}\ input);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

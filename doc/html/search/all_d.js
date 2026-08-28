@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['randquadraticequation_0',['randQuadraticEquation',['../quade_8h.html#a114d1e08636e67e9b58e1f818e7cf7c1',1,'quade.cpp']]],
+  ['ray_1',['Ray',['../struct_ray.html',1,'']]],
+  ['raycollision_2',['RayCollision',['../struct_ray_collision.html',1,'']]],
+  ['rectangle_3',['Rectangle',['../struct_rectangle.html',1,'']]],
+  ['rendertexture_4',['RenderTexture',['../struct_render_texture.html',1,'']]],
+  ['returns_2eh_5',['returns.h',['../returns_8h.html',1,'']]],
+  ['rldrawcall_6',['rlDrawCall',['../structrl_draw_call.html',1,'']]],
+  ['rlrenderbatch_7',['rlRenderBatch',['../structrl_render_batch.html',1,'']]],
+  ['rlvertexbuffer_8',['rlVertexBuffer',['../structrl_vertex_buffer.html',1,'']]],
+  ['root2_9',['root2',['../struct_quadratic_equation.html#a70ebe7b01d5ff37784714673e72ec8cd',1,'QuadraticEquation']]],
+  ['roots_5fcount_10',['roots_count',['../struct_quadratic_equation.html#a2780ae0c5235b08da657839e90a86fca',1,'QuadraticEquation']]],
+  ['roots_5finf_11',['ROOTS_INF',['../quade_8h.html#a395c286e1d7d43ac24012ce4caddfa06ab964a43d4ee858e1d459626f9a0ea7c0',1,'quade.h']]],
+  ['roots_5fone_12',['ROOTS_ONE',['../quade_8h.html#a395c286e1d7d43ac24012ce4caddfa06abdcc073c557c0852ed69d6274509c195',1,'quade.h']]],
+  ['roots_5ftwo_13',['ROOTS_TWO',['../quade_8h.html#a395c286e1d7d43ac24012ce4caddfa06a587a18cf763d96721205bea285dee78e',1,'quade.h']]],
+  ['roots_5fzero_14',['ROOTS_ZERO',['../quade_8h.html#a395c286e1d7d43ac24012ce4caddfa06ade3f1411779db0cc3602a297f4c40b2d',1,'quade.h']]],
+  ['rootscount_15',['ROOTSCOUNT',['../quade_8h.html#a395c286e1d7d43ac24012ce4caddfa06',1,'quade.h']]]
+];

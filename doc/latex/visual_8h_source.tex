@@ -1,0 +1,39 @@
+\doxysection{visual.\+h}
+\hypertarget{visual_8h_source}{}\label{visual_8h_source}\index{include/visual.h@{include/visual.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_VISUAL\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_VISUAL\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}raylib.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{quade_8h}{quade.h}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ WINDOWS\_SIZE\ 1000}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ STANDART\_SCALE\ 50}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structoffset}{offset}}\{}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{struct_vector2}{Vector2}}\ \mbox{\hyperlink{structoffset_abad8c18b86f88a3221a4bdcb6cc275cd}{coords}};\ }
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{struct_vector2}{Vector2}}\ \mbox{\hyperlink{structoffset_a2995e1ad2873f8c0fa7ab72a069fb087}{scale}};\ \ }
+\DoxyCodeLine{00016\ \};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00024\ \mbox{\hyperlink{struct_vector2}{Vector2}}\ converQtoV(\mbox{\hyperlink{struct_vector2}{Vector2}}\ target,\ \mbox{\hyperlink{structoffset}{offset}}\ axis\_offset);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00032\ \mbox{\hyperlink{struct_vector2}{Vector2}}\ converVtoQ(\mbox{\hyperlink{struct_vector2}{Vector2}}\ target,\ \mbox{\hyperlink{structoffset}{offset}}\ axis\_offset);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ visualInit();}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{void}\ drawMainAxis(\mbox{\hyperlink{structoffset}{offset}}\ axis\_offset);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{void}\ drawMainGrid(\mbox{\hyperlink{struct_vector2}{Vector2}}\ axis\_offset);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{void}\ drawQadraticEquation(\ \mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q,\ \mbox{\hyperlink{struct_vector2}{Vector2}}\ \mbox{\hyperlink{structoffset}{offset}});}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00066\ \textcolor{keywordtype}{void}\ keyHandlder(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q,\ \mbox{\hyperlink{structoffset}{offset}}\ *vis\_offset);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ mouseHandler(\mbox{\hyperlink{struct_vector2}{Vector2}}\ *\mbox{\hyperlink{structoffset}{offset}});}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ visualLoop(\mbox{\hyperlink{struct_quadratic_equation}{QuadraticEquation}}\ *q);}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
