@@ -165,6 +165,7 @@ bool trashCleaner(char *input)
         input[J] = input[I];
         J++;
     }
+    input[J] = '\0';
     J = 0;
     for(unsigned I = 0, n =  unsigned(strlen(input)); I < n; I++){
         if (input[I] == '*' && input[J-1] == '*'){

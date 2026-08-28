@@ -56,11 +56,13 @@ static void printInfo()
 
 static void printHelp()
 {
-    printf(YELLOW_ "============HELP===========\n"
-                   "--inptut              : to enter 3 separate coefficients for ax^2 + bx + c. Enter format: 'a b c'\n"
-                   "--file [filename.txt] : to read 3 separate coefficients for ax^2 + bx + c from file. Enter format in file: 'a b c'\n"
-                   "--pars                : for input quadratic eqation in free format. Suported symbols: 0123456789.x+-*/^=\n"
-                   "--test                : for run prepared tests" DEFAULT_COLOR);
+    printf(YELLOW_  "============HELP===========\n"
+                    "--hand              : to input coefficents separatly\n"
+                    "--pars              : to input quadratic equations with x instead of just coefficents\n"
+                    "--file filename.txt : to get input from file instead of comand line\n"
+                    "-c NUM              : to input coefficents NUM times (1 by default)\n"
+                    "--vis               : to show quadratic equations on graphics\n"
+                    "--help              : to get reference\n" DEFAULT_COLOR);
 }
 
 OUTPUTS codeHandler(CLI_FLAG *cli_flag, char *argv[], QuadraticEquation *q)
