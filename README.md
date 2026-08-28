@@ -9,7 +9,22 @@ This is code writed by *FID* on *[MIPT](https://eng.mipt.ru/) summer school* to 
 * Colorful console output
 * Support **unitest**
 ## How to use
+#### Supported comand line flags
+* `--hand` to input coefficents separatly
+* `--pars` to input quadratic equations with x instead of just coefficents
+* `--file filename.txt` to get input from file instead of comand line
+* `-c NUM` to input coefficents NUM times (1 by default)
+* `--vis` to show quadratic equations on graphics
+* `--help` to get reference
 ## Examples  
+## Simple usage  
+<img width="409" height = "45" alt="image" src="https://github.com/user-attachments/assets/21bedf16-41b1-4c3a-a55c-1a1ab63d209c" />  
+#### With count flag
+<img width="447" height="75" alt="image" src="https://github.com/user-attachments/assets/73e30d16-1d0d-4211-aace-3b58e15e1f63" />  
+
+#### Parse and bring the quadratic equation  
+For enable parser use flag `--pars`  
+<img width="427" height="60" alt="image" src="https://github.com/user-attachments/assets/de63f443-2c28-4573-b0ee-ac4e27c7458a" />  
 ### Show graphics  
 Graphics show linear, quadratic equations and their roots  
 For enable graphics use flag `--vis`, on graphics show **only** last equations  
@@ -21,6 +36,3 @@ Graphics UI suport scalable grid and hotkeys
 * X - scale only in OX axis
 * Y - scale only in OY axis
 * ESC - close program
-### Parse and bring the quadratic equation
-For enable parser use flag `--pars`  
-<img width="427" height="60" alt="image" src="https://github.com/user-attachments/assets/de63f443-2c28-4573-b0ee-ac4e27c7458a" />  
