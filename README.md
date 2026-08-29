@@ -37,4 +37,5 @@ Graphics UI suport scalable grid and hotkeys
 * H - return to vertex of parabola
 * X - scale only in OX axis
 * Y - scale only in OY axis
+* S - set standart scale
 * ESC - close program

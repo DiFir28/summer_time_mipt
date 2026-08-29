@@ -148,7 +148,7 @@ void mouseHandler(offset *vis_offset){
     
     //Handle mouse wheel for scale gaphics
     float wheel_change = GetMouseWheelMove();
-    if (wheel_change != 0.0 && (vis_offset->scale.x + wheel_change > 4) && (vis_offset->scale.y + wheel_change > 4)){
+    if (wheel_change != 0.0){
         if (!IsKeyDown(89)){
             vis_offset->coords.x = (vis_offset->coords.x - GetMouseX()) / vis_offset->scale.x;
             vis_offset->scale.x *= 1 + int(wheel_change * 50) / 1000.0;
