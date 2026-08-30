@@ -55,12 +55,12 @@ void drawMainGrid(offset axis_offset){
     
     int num_step = 1;
     if (axis_offset.scale.y < 20){
-        num_step = int(40 / axis_offset.scale.y);
+        num_step = pow(2, int(log2(64 / axis_offset.scale.y)));
     }
-    if (axis_offset.scale.y < 4){
-        num_step = 10;
+    if (int(log2(64 / axis_offset.scale.y)) > 10){
+        num_step = 1024;
     }
-    for (int line_cnt = int(-axis_offset.coords.y / axis_offset.scale.y), n = 1 + int((- axis_offset.coords.y + WINDOWS_SIZE)/ axis_offset.scale.y); line_cnt < n; line_cnt += num_step){
+    for (int line_cnt = int(-axis_offset.coords.y / axis_offset.scale.y / num_step - 1) * num_step, n = 1 + int((- axis_offset.coords.y + WINDOWS_SIZE)/ axis_offset.scale.y); line_cnt < n; line_cnt += num_step){
         // draw and subscribe lines parallel OX with positive Y
         Vector2 J = converQtoV((Vector2){0, float(line_cnt)}, axis_offset);
         Vector2 p1 = {0, J.y};
@@ -71,12 +71,12 @@ void drawMainGrid(offset axis_offset){
     }
     num_step = 1;
     if (axis_offset.scale.x < 20){
-        num_step = int(40 / axis_offset.scale.x);
+        num_step = pow(2, int(log2(64 / axis_offset.scale.x)));
     }
-    if (axis_offset.scale.x < 4){
-        num_step = 10;
+    if (int(log2(64 / axis_offset.scale.x)) > 10){
+        num_step = 1024;
     }    
-    for (int line_cnt = int( - axis_offset.coords.x / axis_offset.scale.x), n = 1 + int((-axis_offset.coords.x + WINDOWS_SIZE)/ axis_offset.scale.x); line_cnt < n; line_cnt += num_step){
+    for (int line_cnt = int( - axis_offset.coords.x / axis_offset.scale.x / num_step - 1) * num_step, n = 1 + int((-axis_offset.coords.x + WINDOWS_SIZE)/ axis_offset.scale.x); line_cnt < n; line_cnt += num_step){
         // draw and subscribe lines parallel OY with positive X
         Vector2 I = converQtoV((Vector2){float(line_cnt), 0}, axis_offset);
         Vector2 p1 = { I.x, 0};
